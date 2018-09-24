@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class CsvLoader extends Mod {
-  _mod = 'csv-loader';
+  mod = 'csv-loader';
+
+  async install(){
+    await Mod.install('csv-loader');
+  }
 };

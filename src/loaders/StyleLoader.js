@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class StyleLoader extends Mod {
-  _mod = 'style-loader';
+  mod = 'style-loader';
+
+  async install(){
+    await Mod.install('style-loader');
+  }
 };

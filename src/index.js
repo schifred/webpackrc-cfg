@@ -1,7 +1,10 @@
+import config from './config';
 import WebpackConfig from './WebpackConfig';
+import { Mod, Plugin } from './Mod';
 
-let opts = new WebpackConfig()
-opts.mode = 'production';
-
-const cssLoader = new WebpackConfig.loaders.CssLoader();
-console.log(cssLoader.options);
+export default {
+  config,
+  WebpackConfig,
+  Mod,
+  Plugin
+};

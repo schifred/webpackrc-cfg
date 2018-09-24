@@ -9,13 +9,26 @@ const isWin = os.platform() == 'win32';
 function exec(script, opts) {
   opts = opts || {};
   opts.cwd = opts.cwd || process.cwd();
-  opts.env = Object.assign({}, process.env, opts.env);
+  opts.env = {
+    ...process.env,
+    ...opts.env
+  };
   const bin = path.normalize(`${opts.cwd}/node_modules/.bin`);
   opts.env.PATH = `${opts.env.PATH}${isWin ? ';' : ':'}${bin}`;
   opts.stdio = opts.stdio || 'inherit';
   opts.builtIn = true;
   debug('opts', opts);
-  script = script || '';
+
+  let flags = [];
+  Object.keys(opts.flag || {}).map(name => {
+    const value = opts.flag[name];
+    const flagName = `${name.length > 1 ? '--' : '-'}${name}`;
+    const flagValue = typeof value === 'string' ? `=${value}` : '';
+    flags.push(`${flagName}${flagValue}`);
+  });
+
+  script = `${script || ''} ${flags.join(' ')}`;
+
   debug('script', opts);
   return new Promise((resolve, reject) => {
     let childProcess = shify(script, opts);

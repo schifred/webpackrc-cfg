@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class SassLoader extends Mod {
-  _mod = 'sass-loader';
+  mod = 'sass-loader';
+
+  async install(){
+    await Mod.install('sass-loader');
+  }
 };

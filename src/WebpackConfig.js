@@ -1,8 +1,10 @@
 import path from 'path';
 import loaders from './loaders';
+import plugins from './plugins';
 
 export default class WebpackConfig {
   static loaders = loaders;
+  static plugins = plugins;
 
   options = {};
 

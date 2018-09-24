@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class VueLoader extends Mod {
-  _mod = 'vue-loader';
+  mod = 'vue-loader';
+
+  async install(){
+    await Mod.install('vue-loader');
+  }
 };

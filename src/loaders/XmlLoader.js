@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class XmlLoader extends Mod {
-  _mod = 'xml-loader';
+  mod = 'xml-loader';
+
+  async install(){
+    await Mod.install('xml-loader');
+  }
 };

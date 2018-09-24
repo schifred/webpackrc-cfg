@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class HtmlLoader extends Mod {
-  _mod = 'html-loader';
+  mod = 'html-loader';
+
+  async install(){
+    await Mod.install('html-loader');
+  }
 };

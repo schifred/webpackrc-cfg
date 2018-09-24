@@ -1,13 +1,14 @@
+import { config } from './config';
 import WebpackConfig from './WebpackConfig';
 
-let defaultConfig = new WebpackConfig();
+config({
+  npm: 'cnpm'
+})
+let opts = new WebpackConfig()
+opts.mode = 'production';
 
-defaultConfig.mode = 'development';
-defaultConfig.context = 'development';
-
-defaultConfig.optimization = {
-  removeAvailableModules: true,
-  removeEmptyChunks: true,
-  mergeDuplicateChunks: true,
-  minimize: isBuild ? true : false
-};
+const cssLoader = new WebpackConfig.loaders.CssLoader({
+  a: 111
+});
+// cssLoader.install();
+console.log(cssLoader.options);

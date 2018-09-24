@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class EjsLoader extends Mod {
-  _mod = 'ejs-loader';
+  mod = 'ejs-loader';
+
+  async install(){
+    await Mod.install('ejs-loader');
+  }
 };

@@ -1,10 +1,20 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class PostcssLoader extends Mod {
-  _mod = 'postcss-loader';
-  _options = { 
-    plugins: [
-      require('autoprefixer')()
-    ]
-  };
+  mod = 'postcss-loader';
+
+  constructor(opts = {}){
+    super(opts);
+    this.opts = {
+      plugins: [
+        require('autoprefixer')()
+      ],
+      ...opts
+    }
+  }
+
+  async install(){
+    await Mod.install('postcss-loader');
+    await Mod.install('autoprefixer');
+  }
 };

@@ -1,13 +1,18 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class CssLoader extends Mod {
-  _mod = 'css-loader';
-  _options = { 
-    modules: true,
-    camelCase: true
-  };
+  mod = 'css-loader';
 
-  constructor(opts){
+  constructor(opts = {}){
     super(opts);
+    this.opts = {
+      modules: true,
+      camelCase: true,
+      ...opts
+    };
+  }
+
+  async install(){
+    await Mod.install('css-loader');
   }
 };

@@ -1,8 +1,17 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
-export default class SvgspriteLoader extends Mod {
-  _mod = 'svg-sprite-loader';
-  _options = { 
-    symbolId: 'icon-[name]'
-  };
+export default class SvgSpriteLoader extends Mod {
+  mod = 'svg-sprite-loader';
+
+  constructor(opts = {}){
+    super(opts);
+    this.opts = {
+      symbolId: 'icon-[name]',
+      ...opts
+    }
+  }
+
+  async install(){
+    await Mod.install('svg-sprite-loader');
+  }
 };

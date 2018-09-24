@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class FileLoader extends Mod {
-  _mod = 'file-loader';
+  mod = 'file-loader';
+
+  async install(){
+    await Mod.install('file-loader');
+  }
 };

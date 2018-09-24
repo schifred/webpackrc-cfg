@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class JsonLoader extends Mod {
-  _mod = 'json-loader';
+  mod = 'json-loader';
+
+  async install(){
+    await Mod.install('json-loader');
+  }
 };

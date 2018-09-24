@@ -1,23 +1,61 @@
 import exec from './utils/exec';
+import { npm, buildin } from './config';
 
-export default class Mod {
+class AbstractMod {
   static async install(name){
+    const modulePath = path.resolve(process.cwd, `./node_modules/${name}`);
+
     console.info(`Installing ${name} ...`);
-    return await exec(`npm i ${name}`);
+    if ( !fs.existsSync(modulePath) ) 
+      await exec(`${npm} install ${name}`, {
+        save: !!buildin
+      });
+    console.info('Done');
   }
-
-  buildin = false;
-
+  
   constructor(opts = {}){
-    const { buildin } = opts;
-    this.buildin = buildin;
+    this.mod = '';
+    this.opts = opts;
   }
 
-  get mod(){
-    return this._buildin ? require.resolve(this._mod) : this._mod;
+  get buildin(){
+    return buildin;
+  }
+
+  async install(){ }
+}
+
+export class Mod extends AbstractMod {
+  static install = AbstractMod.install;
+
+  get module(){
+    return this.buildin ? require.resolve(this.mod) : this.mod;
   }
 
   get options(){
-    return this.transform ? this.transform(this._options) : this._options;
+    return this.transform ? this.transform(this.opts) : this.opts;
+  }
+};
+
+export class Plugin extends AbstractMod {
+  static install = AbstractMod.install;
+
+  get Constructor(){
+    const [ moduleName, ...methodNames ] = this.mod.split('.');
+    let Func = require(moduleName);
+    let i = 0;
+
+    while ( i < methodNames.length ){
+      const methodName = methodNames[i];
+      if ( methodName ) Func = Func[methodName];
+      i++;
+    };
+
+    return Func;
+  }
+
+  get plugin(){
+    const Func = this.Constructor;
+    return new Func(this.opts);
   }
 };

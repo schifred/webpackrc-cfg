@@ -1,5 +1,9 @@
-import Mod from '../Mod';
+import { Mod } from '../Mod';
 
 export default class RawLoader extends Mod {
-  _mod = 'raw-loader';
+  mod = 'raw-loader';
+
+  async install(){
+    await Mod.install('raw-loader');
+  }
 };
