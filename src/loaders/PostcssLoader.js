@@ -13,8 +13,7 @@ export default class PostcssLoader extends Mod {
     }
   }
 
-  async install(){
-    await Mod.install('postcss-loader');
-    await Mod.install('autoprefixer');
+  get dependencies(){
+    return [this.mod, 'autoprefixer'];
   }
 };

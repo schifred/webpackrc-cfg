@@ -13,9 +13,7 @@ export default class EslintLoader extends Mod {
     }
   }
 
-  async install(){
-    await Mod.install('eslint');
-    await Mod.install('eslint-loader');
-    await Mod.install('react-dev-utils');
+  get dependencies(){
+    return ['eslint', this.mod, 'react-dev-utils'];
   }
 };

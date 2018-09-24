@@ -10,8 +10,4 @@ export default class SvgSpriteLoader extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('svg-sprite-loader');
-  }
 };

@@ -1,12 +1,15 @@
+import path from 'path';
 import exec from './utils/exec';
 import { npm, buildin } from './config';
 
 class AbstractMod {
   static async install(name){
-    const modulePath = path.resolve(process.cwd, `./node_modules/${name}`);
+    if ( !name ) return;
+
+    // const modulePath = path.resolve(process.cwd, `./node_modules/${name}`);
 
     console.info(`Installing ${name} ...`);
-    if ( !fs.existsSync(modulePath) ) 
+    // if ( !fs.existsSync(modulePath) ) 
       await exec(`${npm} install ${name}`, {
         save: !!buildin
       });
@@ -22,7 +25,17 @@ class AbstractMod {
     return buildin;
   }
 
-  async install(){ }
+  get dependencies(){
+    return this.mod;
+  }
+
+  async install(){
+    const dependencies = Array.isArray(this.dependencies) ? this.dependencies : [this.dependencies];
+    for ( let i = 0; i < dependencies.length; i++ ){
+    const [ moduleName ] = dependencies[i].split('.');
+      await AbstractMod.install(moduleName);
+    };
+  }
 }
 
 export class Mod extends AbstractMod {

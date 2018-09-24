@@ -7,8 +7,8 @@ config({
 let opts = new WebpackConfig()
 opts.mode = 'production';
 
-const cssLoader = new WebpackConfig.loaders.CssLoader({
+const babelLoader = new WebpackConfig.loaders.BabelLoader({
   a: 111
 });
-// cssLoader.install();
-console.log(cssLoader.options);
+babelLoader.install();
+console.log(babelLoader.options);

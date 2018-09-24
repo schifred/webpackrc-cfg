@@ -18,34 +18,18 @@ class Babel_Preset_Env extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('babel-preset-env');
-  }
 };
 
 class Babel_Preset_Stage_0 extends Mod {
   mod = 'babel-preset-stage-0';
-
-  async install(){
-    await Mod.install('babel-preset-stage-0');
-  }
 };
 
 class Babel_Preset_React extends Mod {
   mod = 'babel-preset-react';
-
-  async install(){
-    await Mod.install('babel-preset-react');
-  }
 };
 
 class Babel_Preset_Flow extends Mod {
   mod = 'babel-preset-flow';
-
-  async install(){
-    await Mod.install('babel-preset-flow');
-  }
 };
 
 class Babel_Plugin_Transform_Runtime extends Mod {
@@ -62,66 +46,34 @@ class Babel_Plugin_Transform_Runtime extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('babel-plugin-transform-runtime');
-  }
 };
 
 class Babel_Plugin_Add_Module_Exports extends Mod {
   mod = 'babel-plugin-add-module-exports';
-
-  async install(){
-    await Mod.install('babel-plugin-add-module-exports');
-  }
 };
 
 class Babel_Plugin_Syntax_Dynamic_Import extends Mod {
   mod = 'babel-plugin-syntax-dynamic-import';
-
-  async install(){
-    await Mod.install('babel-plugin-syntax-dynamic-import');
-  }
 };
 
 class Babel_Plugin_Typecheck extends Mod {
   mod = 'babel-plugin-typecheck';
-
-  async install(){
-    await Mod.install('babel-plugin-typecheck');
-  }
 };
 
 class Babel_Plugin_Transform_Decorators_Legacy extends Mod {
   mod = 'babel-plugin-transform-decorators-legacy';
-
-  async install(){
-    await Mod.install('babel-plugin-transform-decorators-legacy');
-  }
 };
 
 class Babel_Plugin_Transform_Remove_Strict_Mode extends Mod {
   mod = 'babel-plugin-transform-remove-strict-mode';
-
-  async install(){
-    await Mod.install('babel-plugin-transform-remove-strict-mode');
-  }
 };
 
 class Babel_Plugin_React_Require extends Mod {
   mod = 'babel-plugin-react-require';
-
-  async install(){
-    await Mod.install('babel-plugin-transform-remove-strict-mode');
-  }
 };
 
 class Babel_Plugin_Import extends Mod {
   mod = 'babel-plugin-import';
-
-  async install(){
-    await Mod.install('babel-plugin-import');
-  }
 };
 
 export default class BabelLoader extends Mod {
@@ -191,12 +143,11 @@ export default class BabelLoader extends Mod {
     };
   }
 
-  async install(){
-    await Mod.install('babel-loader');
-    await BabelLoader.babel_preset_env.install();
-    await BabelLoader.babel_preset_stage_0.install();
-    await BabelLoader.babel_plugin_transform_runtime.install();
-    await BabelLoader.babel_plugin_transform_decorators_legacy.install();
-    await BabelLoader.babel_plugin_add_module_exports.install();
+  get dependencies(){
+    return [
+      this.mod,
+      ...this.opts.presets.map(preset => preset.mod),
+      ...this.opts.plugins.map(plugin => plugin.mod),
+    ];
   }
 };

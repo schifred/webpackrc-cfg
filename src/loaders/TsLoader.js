@@ -10,8 +10,4 @@ export default class TsLoader extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('ts-loader');
-  }
 };

@@ -11,8 +11,4 @@ export default class CssLoader extends Mod {
       ...opts
     };
   }
-
-  async install(){
-    await Mod.install('css-loader');
-  }
 };

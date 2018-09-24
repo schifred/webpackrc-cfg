@@ -11,8 +11,4 @@ export default class LessLoader extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('less-loader');
-  }
 };

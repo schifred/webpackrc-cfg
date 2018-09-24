@@ -1,5 +1,5 @@
 import { Plugin } from '../Mod';
 
 export default class SplitChunksPlugin extends Plugin {
-  _mod = 'webpack.optimize.SplitChunksPlugin';
+  mod = 'webpack.optimize.SplitChunksPlugin';
 };

@@ -10,8 +10,4 @@ export default class UrlLoader extends Mod {
       ...opts
     }
   }
-
-  async install(){
-    await Mod.install('url-loader');
-  }
 };
