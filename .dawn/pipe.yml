@@ -1,0 +1,9 @@
+test:
+  - name: shell
+    script:
+      - node ./lib/index.js
+
+build:
+  - name: shell
+    script:
+      - npm run build
