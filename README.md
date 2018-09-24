@@ -1,2 +1,2 @@
-# dn-middleware-webpack-config
-A Dawn middleware to create webpack config
+# webpack-config
+A helper to create webpack config
