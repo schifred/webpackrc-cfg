@@ -1,4 +1,5 @@
 import { config } from './config';
+import { installDependency } from './dependency';
 import WebpackConfig from './WebpackConfig';
 
 config({
@@ -10,5 +11,5 @@ opts.mode = 'production';
 const babelLoader = new WebpackConfig.loaders.BabelLoader({
   a: 111
 });
-babelLoader.install();
+installDependency();
 console.log(babelLoader.options);

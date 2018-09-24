@@ -9,6 +9,7 @@ export default class LessLoader extends Mod {
       javascriptEnabled: true,// 不加会报错 Inline JavaScript is not enabled. Is it set in your options?
       lint: false,
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };

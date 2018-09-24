@@ -10,7 +10,8 @@ export default class PostcssLoader extends Mod {
         require('autoprefixer')()
       ],
       ...opts
-    }
+    };
+    this.addDependency();
   }
 
   get dependencies(){

@@ -8,6 +8,7 @@ export default class UrlLoader extends Mod {
     this.opts = {
       limit: 8192,
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };

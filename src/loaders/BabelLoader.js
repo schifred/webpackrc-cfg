@@ -16,20 +16,36 @@ class Babel_Preset_Env extends Mod {
       loose: true,
       useBuiltIns: 'usage',
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };
 
 class Babel_Preset_Stage_0 extends Mod {
   mod = 'babel-preset-stage-0';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Preset_React extends Mod {
   mod = 'babel-preset-react';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Preset_Flow extends Mod {
   mod = 'babel-preset-flow';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Transform_Runtime extends Mod {
@@ -44,60 +60,96 @@ class Babel_Plugin_Transform_Runtime extends Mod {
       'moduleName': 'babel-runtime',
       'useBuiltIns': false,
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };
 
 class Babel_Plugin_Add_Module_Exports extends Mod {
   mod = 'babel-plugin-add-module-exports';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Syntax_Dynamic_Import extends Mod {
   mod = 'babel-plugin-syntax-dynamic-import';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Typecheck extends Mod {
   mod = 'babel-plugin-typecheck';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Transform_Decorators_Legacy extends Mod {
   mod = 'babel-plugin-transform-decorators-legacy';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Transform_Remove_Strict_Mode extends Mod {
   mod = 'babel-plugin-transform-remove-strict-mode';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_React_Require extends Mod {
   mod = 'babel-plugin-react-require';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 class Babel_Plugin_Import extends Mod {
   mod = 'babel-plugin-import';
+
+  constructor(opts = {}){
+    super(opts);
+    this.addDependency();
+  }
 };
 
 export default class BabelLoader extends Mod {
-  static babel_preset_env = new Babel_Preset_Env();
-  static babel_preset_stage_0 = new Babel_Preset_Stage_0();
-  static babel_preset_react = new Babel_Preset_React();
-  static babel_preset_flow = new Babel_Preset_Flow();
+  static Babel_Preset_Env = Babel_Preset_Env;
+  static Babel_Preset_Stage_0 = Babel_Preset_Stage_0;
+  static Babel_Preset_React = Babel_Preset_React;
+  static Babel_Preset_Flow = Babel_Preset_Flow;
 
   // 注入最新的 api
-  static babel_plugin_transform_runtime = new Babel_Plugin_Transform_Runtime();
+  static Babel_Plugin_Transform_Runtime = Babel_Plugin_Transform_Runtime;
   // common.js 模块加载，无需 default
-  static babel_plugin_add_module_exports = new Babel_Plugin_Add_Module_Exports();
+  static Babel_Plugin_Add_Module_Exports = Babel_Plugin_Add_Module_Exports;
   // import 动态加载模块
-  static babel_plugin_syntax_dynamic_import = new Babel_Plugin_Syntax_Dynamic_Import();
+  static Babel_Plugin_Syntax_Dynamic_Import = Babel_Plugin_Syntax_Dynamic_Import;
   // flow 的类型注释转换
-  static babel_plugin_typecheck = new Babel_Plugin_Typecheck();
+  static Babel_Plugin_Typecheck = Babel_Plugin_Typecheck;
   // 装饰器语法转换
-  static babel_plugin_transform_decorators_legacy = new Babel_Plugin_Transform_Decorators_Legacy();
+  static Babel_Plugin_Transform_Decorators_Legacy = Babel_Plugin_Transform_Decorators_Legacy;
   // 移除 strict mode
-  static babel_plugin_transform_remove_strict_mode = new Babel_Plugin_Transform_Remove_Strict_Mode();
+  static Babel_Plugin_Transform_Remove_Strict_Mode = Babel_Plugin_Transform_Remove_Strict_Mode;
   // JSX 语法自动加载 react
-  static babel_plugin_react_require = new Babel_Plugin_React_Require();
+  static Babel_Plugin_React_Require = Babel_Plugin_React_Require;
   // 加载样式等模块
-  static babel_plugin_import = new Babel_Plugin_Import();
+  static Babel_Plugin_Import = Babel_Plugin_Import;
 
   mod = 'babel-loader';
 
@@ -106,17 +158,18 @@ export default class BabelLoader extends Mod {
     this.opts = {
       babelrc: true,
       presets: [ 
-        BabelLoader.babel_preset_env, 
-        BabelLoader.babel_preset_stage_0,
+        new BabelLoader.Babel_Preset_Env(), 
+        new BabelLoader.Babel_Preset_Stage_0(),
       ],
       plugins: [ 
-        BabelLoader.babel_plugin_transform_runtime,
-        BabelLoader.babel_plugin_transform_decorators_legacy,
-        BabelLoader.babel_plugin_add_module_exports
+        new BabelLoader.Babel_Plugin_Transform_Runtime(),
+        new BabelLoader.Babel_Plugin_Transform_Decorators_Legacy(),
+        new BabelLoader.Babel_Plugin_Add_Module_Exports()
       ],
       cacheDirectory: true,// 缓存babel-loader编译结果 
       ...opts
-    }
+    };
+    this.addDependency();
   }
 
   transform(){
@@ -141,13 +194,5 @@ export default class BabelLoader extends Mod {
       presets: _presets,
       plugins: _plugins
     };
-  }
-
-  get dependencies(){
-    return [
-      this.mod,
-      ...this.opts.presets.map(preset => preset.mod),
-      ...this.opts.plugins.map(plugin => plugin.mod),
-    ];
   }
 };

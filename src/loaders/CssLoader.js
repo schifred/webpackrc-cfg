@@ -10,5 +10,6 @@ export default class CssLoader extends Mod {
       camelCase: true,
       ...opts
     };
+    this.addDependency();
   }
 };

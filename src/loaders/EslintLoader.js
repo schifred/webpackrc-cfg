@@ -10,7 +10,8 @@ export default class EslintLoader extends Mod {
       formatter: require('react-dev-utils/eslintFormatter'),// 转换校验结果
       eslintPath: require.resolve('eslint'),// eslint 实例路径，指向 eslint 模块
       ...opts
-    }
+    };
+    this.addDependency();
   }
 
   get dependencies(){

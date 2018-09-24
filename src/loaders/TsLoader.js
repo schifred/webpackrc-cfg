@@ -8,6 +8,7 @@ export default class TsLoader extends Mod {
     this.opts = {
       transpileOnly: true,
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };

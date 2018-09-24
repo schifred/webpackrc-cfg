@@ -8,6 +8,7 @@ export default class SvgSpriteLoader extends Mod {
     this.opts = {
       symbolId: 'icon-[name]',
       ...opts
-    }
+    };
+    this.addDependency();
   }
 };
