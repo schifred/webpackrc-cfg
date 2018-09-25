@@ -1,14 +1,12 @@
 import { Mod } from '../Mod';
 
 export default class UrlLoader extends Mod {
-  mod = 'url-loader';
+  defaultOptions = {
+    limit: 8192
+  };
 
   constructor(opts = {}){
     super(opts);
-    this.opts = {
-      limit: 8192,
-      ...opts
-    };
-    this.addDependency();
-  }
+    this.init();
+  };
 };

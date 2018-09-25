@@ -1,10 +1,10 @@
 import { Plugin } from '../Mod';
 
-export default class VisualizerPlugin extends Plugin {
+export default class WebpackVisualizerPlugin extends Plugin {
   mod = 'webpack-visualizer-plugin';
 
   constructor(opts = {}){
     super(opts);
-    this.addDependency();
+    this.init();
   }
 };

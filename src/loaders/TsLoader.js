@@ -1,14 +1,12 @@
 import { Mod } from '../Mod';
 
 export default class TsLoader extends Mod {
-  mod = 'ts-loader';
+  defaultOptions = {
+    transpileOnly: true
+  };
 
   constructor(opts = {}){
     super(opts);
-    this.opts = {
-      transpileOnly: true,
-      ...opts
-    };
-    this.addDependency();
-  }
+    this.init();
+  };
 };

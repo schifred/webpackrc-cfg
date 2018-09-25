@@ -1,26 +1,40 @@
-import CleanPlugin from './CleanPlugin';
-import CopyPlugin from './CopyPlugin';
+import CleanWebpackPlugin from './CleanWebpackPlugin';
+import CommonsChunkPlugin from './CommonsChunkPlugin';
+import CopyWebpackPlugin from './CopyWebpackPlugin';
+import DefinePlugin from './DefinePlugin';
+import DllPlugin from './DllPlugin';
+import DLLReferencePlugin from './DLLReferencePlugin';
 import EnvironmentPlugin from './EnvironmentPlugin';
-import ExtractTextPlugin from './ExtractTextPlugin';
+import ExtractTextWebpackPlugin from './ExtractTextWebpackPlugin';
 import HotModuleReplacementPlugin from './HotModuleReplacementPlugin';
 import HtmlWebpackPlugin from './HtmlWebpackPlugin';
+import NormalModuleReplacementPlugin from './NormalModuleReplacementPlugin';
+import NpmInstallWebpackPlugin from './NpmInstallWebpackPlugin';
 import OccurrenceOrderPlugin from './OccurrenceOrderPlugin';
-import OptimizeCssAssetsPlugin from './OptimizeCssAssetsPlugin';
+import OptimizeCssAssetsWebpackPlugin from './OptimizeCssAssetsWebpackPlugin';
+import ProvidePlugin from './ProvidePlugin';
 import SplitChunksPlugin from './SplitChunksPlugin';
-import VisualizerPlugin from './VisualizerPlugin';
 import WatchMissingNodeModulesPlugin from './WatchMissingNodeModulesPlugin';
+import WebpackVisualizerPlugin from './WebpackVisualizerPlugin';
 
 export default {
-  CleanPlugin, 
-  CopyPlugin, 
+  CleanWebpackPlugin, 
+  CommonsChunkPlugin,
+  CopyWebpackPlugin, 
+  DefinePlugin,
+  DllPlugin,
+  DLLReferencePlugin,
   EnvironmentPlugin, 
-  ExtractTextPlugin,
+  ExtractTextWebpackPlugin,
   HotModuleReplacementPlugin,
   HtmlWebpackPlugin, 
+  NormalModuleReplacementPlugin,
+  NpmInstallWebpackPlugin,
   OccurrenceOrderPlugin, 
   OccurrenceOrderPlugin,
-  OptimizeCssAssetsPlugin,
+  OptimizeCssAssetsWebpackPlugin,
+  ProvidePlugin,
   SplitChunksPlugin,
-  VisualizerPlugin,
   WatchMissingNodeModulesPlugin,
+  WebpackVisualizerPlugin,
 };

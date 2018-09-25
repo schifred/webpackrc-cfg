@@ -5,6 +5,6 @@ export default class EnvironmentPlugin extends Plugin {
 
   constructor(opts = {}){
     super(opts);
-    this.addDependency();
+    this.init();
   }
 };

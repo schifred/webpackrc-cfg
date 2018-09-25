@@ -1,15 +1,13 @@
 import { Mod } from '../Mod';
 
 export default class CssLoader extends Mod {
-  mod = 'css-loader';
+  defaultOptions = {
+    modules: true,
+    camelCase: true
+  };
 
   constructor(opts = {}){
     super(opts);
-    this.opts = {
-      modules: true,
-      camelCase: true,
-      ...opts
-    };
-    this.addDependency();
-  }
+    this.init();
+  };
 };

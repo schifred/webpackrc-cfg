@@ -8,8 +8,11 @@ config({
 let opts = new WebpackConfig()
 opts.mode = 'production';
 
-const babelLoader = new WebpackConfig.loaders.BabelLoader({
+// const babelLoader = new WebpackConfig.loaders.BabelLoader({
+//   a: 111
+// });
+const environmentPlugin = new WebpackConfig.plugins.EnvironmentPlugin({
   a: 111
 });
 installDependency();
-console.log(babelLoader.options);
+console.log(environmentPlugin);

@@ -1,10 +1,3 @@
 import { Mod } from '../Mod';
 
-export default class CsvLoader extends Mod {
-  mod = 'csv-loader';
-
-  constructor(opts = {}){
-    super(opts);
-    this.addDependency();
-  }
-};
+export default class CsvLoader extends Mod { };
