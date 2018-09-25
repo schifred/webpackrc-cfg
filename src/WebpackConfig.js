@@ -41,9 +41,8 @@ export default class WebpackConfig {
       let { publicPath } = context;
       context.publicPath = this.mode !== 'development' ? publicPath : '/';
     };
-    if ( this.context ){
-      let { path } = context;
-      context.path = path.resolve(this.context, path);
+    if ( this.context && context.path ){
+      context.path = path.resolve(this.context, context.path);
     };
 
     this.options.output = output;
