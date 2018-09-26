@@ -29,7 +29,7 @@ export default async function getDefaultConfig(mode){
   const occurrenceOrderPlugin = new WebpackConfig.plugins.OccurrenceOrderPlugin();
   const hotModuleReplacementPlugin = new WebpackConfig.plugins.HotModuleReplacementPlugin();
   const cleanWebpackPlugin = new WebpackConfig.plugins.CleanWebpackPlugin();
-  //const copyWebpackPlugin = new WebpackConfig.plugins.CopyWebpackPlugin();
+  const copyWebpackPlugin = new WebpackConfig.plugins.CopyWebpackPlugin();
 
   await installDependency();
 
