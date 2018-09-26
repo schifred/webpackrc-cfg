@@ -125,7 +125,8 @@ async function getConfig(mode){
   opts.optimization = {
     removeAvailableModules: true,
     removeEmptyChunks: true,
-    mergeDuplicateChunks: true
+    mergeDuplicateChunks: true,
+    minimize: mode === 'production' ? true : false
   };
 };
 ```

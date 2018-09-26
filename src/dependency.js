@@ -59,7 +59,6 @@ export function transformDependencyName(name){
 
 function getDependencyNameWithVersion(name){
   let version = projectDependencies[name];
-  console.log(name, version)
-  version = /^\d$/.test(version[0]) ? version : version.slice(1);
-  return `${name}@${version}`;
+  if ( version ) version = /^\d$/.test(version[0]) ? version : version.slice(1);
+  return version ? `${name}@${version}` : name;
 };
