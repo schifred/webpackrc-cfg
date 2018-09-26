@@ -44,25 +44,25 @@ export class Mod extends AbstractMod {
   get options(){
     return this.transform ? this.transform(this.opts) : this.opts;
   };
+
+  getOptions(opts = {}){
+    return this.transform ? this.transform({...this.opts, ...opts}) : {...this.opts, ...opts};
+  };
 };
 
 export class Plugin extends AbstractMod {
-  constructor(opts, arg2, arg3, arg4){
-    super(opts, arg2, arg3, arg4);
+  constructor(opts){
+    super(opts);
     this.mod = this.transformDependencyName(this.constructor.name);
     this.opts = opts;
-    this.arg2 = arg2;
-    this.arg3 = arg3;
-    this.arg4 = arg4;
     this.init();
   };
   
   init(){
     this.opts = this.defaultOptions ? {
-      ...this.defaultOptions,
+      ...(this.defaultOptions || {}),
       ...(this.opts || {})
     } : this.opts;
-    
     // 依赖管理
     this.removeDependency(this.transformDependencyName(this.constructor.name));
     this.addDependency(this.dependencies);
@@ -84,6 +84,16 @@ export class Plugin extends AbstractMod {
 
   get plugin(){
     const Func = this.Plugin;
-    return new Func(this.opts, this.arg2, this.arg3, this.arg4);
+    return new Func(this.opts);
+  }
+
+  getPlugin(arg1, arg2, arg3, arg4){
+    const Func = this.Plugin;
+    return new Func(
+      this.opts && typeof arg1 === 'object' ? { ...this.opts, ...arg1 } : arg1, 
+      arg2, 
+      arg3, 
+      arg4
+    );
   };
 };

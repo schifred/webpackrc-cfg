@@ -52,7 +52,9 @@ export async function installDependency(){
 };
 
 export function transformDependencyName(name){
-  return hyphen(name.replace(/_/g, () => ''));
+  name = name.replace(/_(?=[\d])/g, () => '-')
+    .replace(/_(?=[^\d])/g, () => '');
+  return hyphen(name);
 };
 
 function getDependencyNameWithVersion(name){

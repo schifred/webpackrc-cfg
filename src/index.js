@@ -3,6 +3,7 @@ import WebpackConfig from './WebpackConfig';
 import { Mod, Plugin } from './Mod';
 import loaders from './loaders';
 import plugins from './plugins';
+import getDefaultConfig from './getDefaultConfig';
 
 export default {
   config,
@@ -10,5 +11,6 @@ export default {
   Mod,
   Plugin,
   loaders,
-  plugins
+  plugins,
+  getDefaultConfig
 };

@@ -3,13 +3,13 @@ import CssLoader from './CssLoader';
 import CsvLoader from './CsvLoader';
 import EjsLoader from './EjsLoader';
 import EslintLoader from './EslintLoader';
+import FastSassLoader from './FastSassLoader';
 import FileLoader from './FileLoader';
 import HtmlLoader from './HtmlLoader';
 import JsonLoader from './JsonLoader';
 import LessLoader from './LessLoader';
 import PostcssLoader from './PostcssLoader';
 import RawLoader from './RawLoader';
-import SassLoader from './SassLoader';
 import StyleLoader from './StyleLoader';
 import SvgSpriteLoader from './SvgSpriteLoader';
 import TsLoader from './TsLoader';
@@ -23,13 +23,13 @@ export default {
   CsvLoader, 
   EjsLoader,
   EslintLoader,
+  FastSassLoader,
   FileLoader, 
   HtmlLoader, 
   JsonLoader,
   LessLoader,
   PostcssLoader,
   RawLoader,
-  SassLoader,
   StyleLoader,
   SvgSpriteLoader,
   TsLoader,
