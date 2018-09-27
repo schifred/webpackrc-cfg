@@ -7,6 +7,9 @@
     "test": "dn test && dn build -e prod",
     "build": "rimraf lib && babel src --out-dir lib"
   },
+  "bin": {
+    "cfg": "bin/cfg.js"
+  },
   "author": "alfred.qiu",
   "license": "MIT",
   "devDependencies": {
@@ -17,6 +20,7 @@
     "babel-preset-stage-0": "^6.24.1"
   },
   "dependencies": {
+    "common-bin": "^2.7.3",
     "debug": "^4.0.1",
     "globby": "^8.0.1",
     "os": "^0.1.1",
@@ -54,6 +58,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "npm-install-webpack-plugin": "^4.0.5",
+    "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",

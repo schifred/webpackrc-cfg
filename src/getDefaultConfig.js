@@ -111,7 +111,7 @@ export default async function getDefaultConfig(mode){
       to: path.resolve(cwd, 'dist')
     }) : undefined,
   ].filter(plugin => !!plugin);
-  opts.devtool = 'source-map';
+  opts.devtool = mode !== 'production' ? 'source-map' : false;
   opts.watch = true;
   opts.optimization = {
     removeAvailableModules: true,

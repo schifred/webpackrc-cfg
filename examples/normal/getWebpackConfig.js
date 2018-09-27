@@ -1,26 +1,14 @@
-# webpack-config
-
-## 概述
-
-用于辅助生成 webpack 配置。
-
-1. 创建 loader, plugin 实例。
-2. 安装 loader, plugin。
-3. 完成 webpack 配置。
-
-tips: 当 loader, plugin 实例已明确指定时，通过 cfg install -d [path] 命令可安装指定的 loader, plugin。path 为生成 loader, plugin 实例的 js 文件。参考 examples/dependencies 实现。
-
-## 示例
-
-```Javascript
-import path from 'path';
-import { config, WebpackConfig, installDependency } from 'webpack-config';
+const path = require('path');
+const Wrc = require('../../lib');
+const WebpackConfig = Wrc.WebpackConfig;
+const config = Wrc.config;
+const installDependency = Wrc.installDependency;
 
 const cwd = process.cwd();
 
 config({
   npm: 'cnpm'
-})
+});
 
 async function getWebpackConfig(mode){
   if ( typeof mode === 'boolean' && mode ){
@@ -29,7 +17,6 @@ async function getWebpackConfig(mode){
     mode = 'development';
   };
 
-  // 创建 loader, plugin 实例
   const babelLoader = new WebpackConfig.loaders.BabelLoader();
   const jsonLoader = new WebpackConfig.loaders.JsonLoader();
   const rawLoader = new WebpackConfig.loaders.RawLoader();
@@ -47,10 +34,8 @@ async function getWebpackConfig(mode){
   const cleanWebpackPlugin = new WebpackConfig.plugins.CleanWebpackPlugin();
   const copyWebpackPlugin = new WebpackConfig.plugins.CopyWebpackPlugin();
 
-  // 安装 loader, plugin
   await installDependency();
 
-  // 完成 webpack 配置
   let opts = new WebpackConfig();
   opts.mode = mode || 'development';
   opts.context = cwd;
@@ -129,7 +114,7 @@ async function getWebpackConfig(mode){
       to: path.resolve(cwd, 'dist')
     }) : undefined,
   ].filter(plugin => !!plugin);
-  opts.devtool = 'source-map';
+  opts.devtool = mode !== 'production' ? 'source-map' : false;
   opts.watch = true;
   opts.optimization = {
     removeAvailableModules: true,
@@ -138,4 +123,3 @@ async function getWebpackConfig(mode){
     minimize: mode === 'production' ? true : false
   };
 };
-```
