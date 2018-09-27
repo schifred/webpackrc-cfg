@@ -1,4 +1,18 @@
-# webpack-config
+# webpackrc-cfg
+
+## 安装
+
+```bash
+## 全局或本地安装
+$ npm i webpackrc-cfg --save
+
+## 获取版本
+$ webpackrc-cfg -v
+1.0.0
+
+## 在已创建 loader, plugin 实例的基础上，安装 loader, plugin
+$ cfg install
+```
 
 ## 概述
 
