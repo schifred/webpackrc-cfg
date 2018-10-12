@@ -28,7 +28,7 @@ tips: 当 loader, plugin 实例已明确指定时，通过 cfg install -d [path]
 
 ```Javascript
 import path from 'path';
-import { config, WebpackConfig, installDependency } from 'webpack-config';
+import { config, WebpackConfig, installDependency } from 'webpackrc-cfg';
 
 const cwd = process.cwd();
 
