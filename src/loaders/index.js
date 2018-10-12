@@ -1,4 +1,5 @@
 import BabelLoader from './BabelLoader';
+import CssExtractLoader from './CssExtractLoader';
 import CssLoader from './CssLoader';
 import CsvLoader from './CsvLoader';
 import EjsLoader from './EjsLoader';
@@ -19,6 +20,7 @@ import XmlLoader from './XmlLoader';
 
 export default {
   BabelLoader, 
+  CssExtractLoader, 
   CssLoader, 
   CsvLoader, 
   EjsLoader,
