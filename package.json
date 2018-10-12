@@ -1,6 +1,6 @@
 {
   "name": "webpackrc-cfg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "common-bin": "^2.7.3",
     "debug": "^4.0.1",
     "globby": "^8.0.1",
+    "ntils": "^4.0.4",
     "os": "^0.1.1",
     "shify": "^3.0.6"
   },

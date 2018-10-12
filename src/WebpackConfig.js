@@ -1,4 +1,6 @@
 import path from 'path';
+import utils from 'ntils';
+import globby from 'globby';
 import loaders from './loaders';
 import plugins from './plugins';
 
@@ -29,7 +31,26 @@ export default class WebpackConfig {
     return this.options.entry;
   };
   set entry(entry){
-    this.options.entry = entry;
+    this.options.entry = {};
+    if ( utils.isObject(opts.entry) && !utils.isArray(opts.entry) ) {
+      utils.each(opts.entry, (nameExpr, fileExpr) => {
+        let files = globby.sync(fileExpr);
+        files.forEach(file => {
+          let paths = file.split('/').reverse()
+            .map(item => (path.basename(item).split('.')[0]));
+          let name = nameExpr.replace(/\((\d+)\)/g, (str, index) => {
+            return paths[index];
+          });
+          this.options.entry[name] = file;
+        });
+      });
+    } else {
+      let files = globby.sync(opts.entry);
+      entries = files.map(file => {
+        let name = path.basename(file).split('.')[0];
+        this.options.entry[name] = file;
+      });
+    };
   };
 
   // 输出，https://www.webpackjs.com/configuration/output/
