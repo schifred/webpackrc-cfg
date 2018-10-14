@@ -10,4 +10,8 @@ export default class LessLoader extends Mod {
     super(opts);
     this.init();
   };
+
+  get dependencies(){
+    return ['less', this.mod];
+  }; 
 };

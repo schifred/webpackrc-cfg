@@ -87,6 +87,10 @@ export default class BabelLoader extends Mod {
     this.init();
   }
 
+  get dependencies(){
+    return ['@babel/core', this.mod];
+  }; 
+
   transform(){
     const { presets, plugins } = this.opts;
     let _presets = [];
