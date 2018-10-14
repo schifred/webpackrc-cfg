@@ -46,7 +46,8 @@ export async function install(name){
 
 export async function installDependency(){
   for ( let i = 0; i < peerDependencies.length; i++ ){
-    const [ moduleName ] = peerDependencies[i].split(/\.|\//);
+    const [ moduleName ] = getDependencyNameWithVersion(peerDependencies[i]) ? 
+      peerDependencies[i] : peerDependencies[i].split(/\.|\//);
     await install(moduleName);
   };
 };
