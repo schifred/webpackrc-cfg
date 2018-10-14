@@ -1,8 +1,11 @@
 import path from 'path';
-import utils from 'ntils';
 import globby from 'globby';
 import loaders from './loaders';
 import plugins from './plugins';
+
+function isObject(obj){
+  return Object.prototype.toString.call(obj) === '[object Object]' && obj !== null;
+}
 
 export default class WebpackConfig {
   static loaders = loaders;
@@ -32,8 +35,9 @@ export default class WebpackConfig {
   };
   set entry(entry){
     this.options.entry = {};
-    if ( utils.isObject(opts.entry) && !utils.isArray(opts.entry) ) {
-      utils.each(opts.entry, (nameExpr, fileExpr) => {
+    if ( isObject(entry) ) {
+      Object.keys(entry, nameExpr => {
+        const fileExpr = entry[nameExpr];
         let files = globby.sync(fileExpr);
         files.forEach(file => {
           let paths = file.split('/').reverse()
@@ -45,7 +49,7 @@ export default class WebpackConfig {
         });
       });
     } else {
-      let files = globby.sync(opts.entry);
+      let files = globby.sync(entry);
       entries = files.map(file => {
         let name = path.basename(file).split('.')[0];
         this.options.entry[name] = file;
