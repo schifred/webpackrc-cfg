@@ -8,7 +8,7 @@ $ npm i webpackrc-cfg --save
 
 ## 获取版本
 $ webpackrc-cfg -v
-1.0.0
+1.0.3
 
 ## 在已创建 loader, plugin 实例的基础上，安装 loader, plugin
 $ cfg install
