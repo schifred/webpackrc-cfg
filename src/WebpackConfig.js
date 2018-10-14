@@ -36,7 +36,7 @@ export default class WebpackConfig {
   set entry(entry){
     this.options.entry = {};
     if ( isObject(entry) ) {
-      Object.keys(entry, nameExpr => {
+      Object.keys(entry).map(nameExpr => {
         const fileExpr = entry[nameExpr];
         let files = globby.sync(fileExpr);
         files.forEach(file => {
