@@ -50,7 +50,7 @@ export default class WebpackConfig {
       });
     } else {
       let files = globby.sync(entry);
-      entries = files.map(file => {
+      files.map(file => {
         let name = path.basename(file).split('.')[0];
         this.options.entry[name] = file;
       });
