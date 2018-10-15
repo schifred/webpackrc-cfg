@@ -54,7 +54,7 @@ class Babel_Plugin_Transform_Runtime extends Mod {
 
   constructor(opts = {}){
     super(opts);
-    this.mod = '@babel/preset-transform-runtime';
+    this.mod = '@babel/plugin-transform-runtime';
     this.init();
   };
 };
@@ -64,7 +64,7 @@ class Babel_Plugin_Add_Module_Exports extends Mod { };
 class Babel_Plugin_Syntax_Dynamic_Import extends Mod { 
   constructor(opts = {}){
     super(opts);
-    this.mod = '@babel/preset-syntax-dynamic-import';
+    this.mod = '@babel/plugin-syntax-dynamic-import';
     this.init();
   };
 };
