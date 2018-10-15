@@ -17,11 +17,42 @@ class Babel_Preset_Env extends Mod {
     super(opts);
     this.init();
   };
+
+  get dependencies(){
+    return ['@babel/preset-env'];
+  }; 
 };
 
-class Babel_Preset_Stage_0 extends Mod { };
-class Babel_Preset_React extends Mod { };
-class Babel_Preset_Flow extends Mod { };
+class Babel_Preset_Stage_0 extends Mod {
+  constructor(opts = {}){
+    super(opts);
+    this.init();
+  };
+
+  get dependencies(){
+    return ['@babel/preset-stage-0'];
+  }; 
+};
+class Babel_Preset_React extends Mod { 
+  constructor(opts = {}){
+    super(opts);
+    this.init();
+  };
+
+  get dependencies(){
+    return ['@babel/preset-react'];
+  }; 
+};
+class Babel_Preset_Flow extends Mod { 
+  constructor(opts = {}){
+    super(opts);
+    this.init();
+  };
+
+  get dependencies(){
+    return ['@babel/preset-flow'];
+  }; 
+};
 
 // 注入最新的 api
 class Babel_Plugin_Transform_Runtime extends Mod {
@@ -37,11 +68,24 @@ class Babel_Plugin_Transform_Runtime extends Mod {
     super(opts);
     this.init();
   };
+
+  get dependencies(){
+    return ['@babel/plugin-transform-runtime'];
+  }; 
 };
 // common.js 模块加载，无需 default
 class Babel_Plugin_Add_Module_Exports extends Mod { };
 // import 动态加载模块
-class Babel_Plugin_Syntax_Dynamic_Import extends Mod { };
+class Babel_Plugin_Syntax_Dynamic_Import extends Mod { 
+  constructor(opts = {}){
+    super(opts);
+    this.init();
+  };
+
+  get dependencies(){
+    return ['@babel/plugin-syntax-dynamic-import'];
+  }; 
+};
 // flow 的类型注释转换
 class Babel_Plugin_Typecheck extends Mod { };
 // 装饰器语法转换
