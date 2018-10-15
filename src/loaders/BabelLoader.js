@@ -276,6 +276,11 @@ export default class BabelLoader extends Mod {
   static Babel_Plugin_Proposal_Class_Properties = Babel_Plugin_Proposal_Class_Properties;
   static Babel_Plugin_Proposal_Json_Strings = Babel_Plugin_Proposal_Json_Strings;
 
+  static Babel_Plugins_Stage_0 = Babel_Plugins_Stage_0;
+  static Babel_Plugins_Stage_1 = Babel_Plugins_Stage_1;
+  static Babel_Plugins_Stage_2 = Babel_Plugins_Stage_2;
+  static Babel_Plugins_Stage_3 = Babel_Plugins_Stage_3;
+
   defaultOptions = {
     babelrc: true,
     presets: [ 
