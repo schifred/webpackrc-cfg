@@ -1,17 +1,17 @@
 import { Mod } from '../Mod';
 
 class Babel_Preset_Env extends Mod {
-  // defaultOptions = {
-  //   targets: {
-  //     browsers: [
-  //       'last 2 versions',
-  //       'IE >= 9'
-  //     ],
-  //     uglify: true
-  //   },
-  //   loose: true,
-  //   useBuiltIns: 'usage'
-  // };
+  defaultOptions = {
+    targets: {
+      browsers: [
+        'last 2 versions',
+        'IE >= 9'
+      ],
+      uglify: true
+    },
+    loose: true,
+    useBuiltIns: 'usage'
+  };
 
   constructor(opts = {}){
     super(opts);
@@ -37,13 +37,13 @@ class Babel_Preset_Flow extends Mod {
 
 // 注入最新的 api
 class Babel_Plugin_Transform_Runtime extends Mod {
-  // defaultOptions = {
-  //   'helpers': true,
-  //   'polyfill': true,
-  //   'regenerator': true,
-  //   'moduleName': 'babel-runtime',
-  //   'useBuiltIns': false
-  // };
+  defaultOptions = {
+    'helpers': true,
+    'polyfill': true,
+    'regenerator': true,
+    'moduleName': 'babel-runtime',
+    'useBuiltIns': false
+  };
 
   constructor(opts = {}){
     super(opts);
@@ -130,6 +130,7 @@ class Babel_Plugin_Proposal_Do_Expressions extends Mod {
 // stage_2
 class Babel_Plugin_Proposal_Decorators extends Mod {  
   defaultOptions = {
+    decoratorsBeforeExport: true, 
     legacy: true
   };
 
@@ -318,8 +319,8 @@ export default class BabelLoader extends Mod {
 
     plugins.map(plugin => {
       if ( !(plugin instanceof Mod) ) return plugin;
+      if ( plugin.mod && plugin.options ) _plugins.push([plugin.mod, plugin.options]);
       if ( plugin.mod ) _plugins.push(plugin.mod);
-      if ( plugin.options ) _plugins.push(plugin.options);
     });
 
     return {
