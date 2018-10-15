@@ -44,13 +44,13 @@ class Babel_Preset_Flow extends Mod {
 
 // 注入最新的 api
 class Babel_Plugin_Transform_Runtime extends Mod {
-  defaultOptions = {
-    'helpers': true,
-    'polyfill': true,
-    'regenerator': true,
-    'moduleName': 'babel-runtime',
-    'useBuiltIns': false
-  };
+  // defaultOptions = {
+  //   'helpers': true,
+  //   'polyfill': true,
+  //   'regenerator': true,
+  //   'moduleName': 'babel-runtime',
+  //   'useBuiltIns': false
+  // };
 
   constructor(opts = {}){
     super(opts);
