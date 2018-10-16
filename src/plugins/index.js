@@ -8,6 +8,7 @@ import ExtractTextWebpackPlugin from './ExtractTextWebpackPlugin';
 import HotModuleReplacementPlugin from './HotModuleReplacementPlugin';
 import HtmlWebpackPlugin from './HtmlWebpackPlugin';
 import MiniCssExtractPlugin from './MiniCssExtractPlugin';
+import ModuleConcatenationPlugin from './ModuleConcatenationPlugin';
 import NormalModuleReplacementPlugin from './NormalModuleReplacementPlugin';
 import NpmInstallWebpackPlugin from './NpmInstallWebpackPlugin';
 import OccurrenceOrderPlugin from './OccurrenceOrderPlugin';
@@ -28,6 +29,7 @@ export default {
   ExtractTextWebpackPlugin,
   HotModuleReplacementPlugin,
   HtmlWebpackPlugin, 
+  ModuleConcatenationPlugin, 
   MiniCssExtractPlugin, 
   NormalModuleReplacementPlugin,
   NpmInstallWebpackPlugin,
