@@ -1,5 +1,4 @@
 import BabelLoader from './BabelLoader';
-import CssExtractLoader from './CssExtractLoader';
 import CssLoader from './CssLoader';
 import CsvLoader from './CsvLoader';
 import EjsLoader from './EjsLoader';
@@ -9,6 +8,7 @@ import FileLoader from './FileLoader';
 import HtmlLoader from './HtmlLoader';
 import JsonLoader from './JsonLoader';
 import LessLoader from './LessLoader';
+import MiniCssExtractLoader from './MiniCssExtractLoader';
 import PostcssLoader from './PostcssLoader';
 import RawLoader from './RawLoader';
 import StyleLoader from './StyleLoader';
@@ -20,7 +20,6 @@ import XmlLoader from './XmlLoader';
 
 export default {
   BabelLoader, 
-  CssExtractLoader, 
   CssLoader, 
   CsvLoader, 
   EjsLoader,
@@ -30,6 +29,7 @@ export default {
   HtmlLoader, 
   JsonLoader,
   LessLoader,
+  MiniCssExtractLoader, 
   PostcssLoader,
   RawLoader,
   StyleLoader,

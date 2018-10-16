@@ -1,17 +1,17 @@
 import { Mod } from '../Mod';
 
 class Babel_Preset_Env extends Mod {
-  defaultOptions = {
-    targets: {
-      browsers: [
-        'last 2 versions',
-        'IE >= 9'
-      ],
-      uglify: true
-    },
-    loose: true,
-    useBuiltIns: 'usage'
-  };
+  // defaultOptions = {
+  //   targets: {
+  //     browsers: [
+  //       'last 2 versions',
+  //       'IE >= 9'
+  //     ],
+  //     uglify: true
+  //   },
+  //   loose: true,
+  //   useBuiltIns: 'usage'
+  // };
 
   constructor(opts = {}){
     super(opts);
@@ -39,10 +39,9 @@ class Babel_Preset_Flow extends Mod {
 class Babel_Plugin_Transform_Runtime extends Mod {
   defaultOptions = {
     'helpers': true,
-    'polyfill': true,
     'regenerator': true,
-    'moduleName': 'babel-runtime',
-    'useBuiltIns': false
+    //'absoluteRuntime': '@babel/runtime-corejs2',
+    'corejs': '2'
   };
 
   constructor(opts = {}){
@@ -50,6 +49,10 @@ class Babel_Plugin_Transform_Runtime extends Mod {
     this.mod = '@babel/plugin-transform-runtime';
     this.init();
   };
+
+  get dependencies(){
+    return ['@babel/runtime', this.mod];
+  }; 
 };
 // common.js 模块加载，无需 default
 class Babel_Plugin_Add_Module_Exports extends Mod { };
@@ -130,7 +133,6 @@ class Babel_Plugin_Proposal_Do_Expressions extends Mod {
 // stage_2
 class Babel_Plugin_Proposal_Decorators extends Mod {  
   defaultOptions = {
-    decoratorsBeforeExport: true, 
     legacy: true
   };
 
@@ -289,7 +291,7 @@ export default class BabelLoader extends Mod {
     ],
     plugins: [ 
       new BabelLoader.Babel_Plugin_Transform_Runtime(),
-      new BabelLoader.Babel_Plugin_Transform_Decorators_Legacy(),
+      /*new BabelLoader.Babel_Plugin_Transform_Decorators_Legacy(),*/
       new BabelLoader.Babel_Plugin_Add_Module_Exports(),
       // https://babeljs.io/blog/2018/07/27/removing-babels-stage-presets
       ...new Babel_Plugins_Stage_0().plugin,
@@ -306,21 +308,37 @@ export default class BabelLoader extends Mod {
     return ['@babel/core', this.mod];
   }; 
 
-  transform(){
-    const { presets, plugins } = this.opts;
+  transform(opts){
+    const { presets, plugins } = opts;
     let _presets = [];
     let _plugins = [];
 
     presets.map(preset => {
-      if ( !(preset instanceof Mod) ) return preset;
-      if ( preset.mod ) _presets.push(preset.mod);
-      if ( preset.options ) _presets.push(preset.options);
+      if ( !(preset instanceof Mod) ){
+        _presets.push(preset);
+        return;
+      };
+
+      if ( !preset.options ){
+        _presets.push(preset.mod);
+        return;
+      };
+
+      if ( preset.mod && preset.options ) _presets.push([preset.mod, preset.options]);
     });
 
     plugins.map(plugin => {
-      if ( !(plugin instanceof Mod) ) return plugin;
+      if ( !(plugin instanceof Mod) ){
+        _plugins.push(plugin);
+        return;
+      };
+
+      if ( !plugin.options ){
+        _plugins.push(plugin.mod);
+        return;
+      };
+
       if ( plugin.mod && plugin.options ) _plugins.push([plugin.mod, plugin.options]);
-      if ( plugin.mod ) _plugins.push(plugin.mod);
     });
 
     return {

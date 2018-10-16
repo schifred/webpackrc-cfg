@@ -1,11 +1,6 @@
-import { buildin } from './config';
 import { addDependency, removeDependency, transformDependencyName } from './dependency';
 
 class AbstractMod {
-  get buildin(){
-    return buildin;
-  };
-
   get dependencies(){
     return this.mod;
   };
@@ -38,7 +33,8 @@ export class Mod extends AbstractMod {
   }
 
   get module(){
-    return this.buildin ? require.resolve(this.mod) : this.mod;
+    const [ moduleName, methodName ] = this.mod.split('.');
+    return !methodName ? require.resolve(moduleName) : require(moduleName)[methodName];
   };
 
   get options(){
