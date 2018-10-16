@@ -51,7 +51,7 @@ class Babel_Plugin_Transform_Runtime extends Mod {
   };
 
   get dependencies(){
-    return ['@babel/runtime', this.mod];
+    return ['@babel/runtime-corejs2', this.mod];
   }; 
 };
 // common.js 模块加载，无需 default

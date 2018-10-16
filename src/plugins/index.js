@@ -1,5 +1,4 @@
 import CleanWebpackPlugin from './CleanWebpackPlugin';
-import CommonsChunkPlugin from './CommonsChunkPlugin';
 import CopyWebpackPlugin from './CopyWebpackPlugin';
 import DefinePlugin from './DefinePlugin';
 import DllPlugin from './DllPlugin';
@@ -21,7 +20,6 @@ import WebpackVisualizerPlugin from './WebpackVisualizerPlugin';
 
 export default {
   CleanWebpackPlugin, 
-  CommonsChunkPlugin,
   CopyWebpackPlugin, 
   DefinePlugin,
   DllPlugin,
