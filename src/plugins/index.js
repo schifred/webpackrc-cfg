@@ -15,6 +15,7 @@ import OccurrenceOrderPlugin from './OccurrenceOrderPlugin';
 import OptimizeCssAssetsWebpackPlugin from './OptimizeCssAssetsWebpackPlugin';
 import ProvidePlugin from './ProvidePlugin';
 import SplitChunksPlugin from './SplitChunksPlugin';
+import UglifyjsWebpackPlugin from './UglifyjsWebpackPlugin';
 import VmoduleWebpackPlugin from './VmoduleWebpackPlugin';
 import WatchMissingNodeModulesPlugin from './WatchMissingNodeModulesPlugin';
 import WebpackVisualizerPlugin from './WebpackVisualizerPlugin';
@@ -38,6 +39,7 @@ export default {
   OptimizeCssAssetsWebpackPlugin,
   ProvidePlugin,
   SplitChunksPlugin,
+  UglifyjsWebpackPlugin,
   VmoduleWebpackPlugin,
   WatchMissingNodeModulesPlugin,
   WebpackVisualizerPlugin,

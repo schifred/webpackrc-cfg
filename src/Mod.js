@@ -1,5 +1,8 @@
-import { addDependency, removeDependency, transformDependencyName } from './dependency';
+import { addDependency, removeDependency, transformDependencyName } from './depend';
 
+/**
+ * 抽象加载器、插件基类
+ */
 class AbstractMod {
   get dependencies(){
     return this.mod;
@@ -10,6 +13,9 @@ class AbstractMod {
   transformDependencyName = transformDependencyName;
 };
 
+/**
+ * 加载器基类
+ */
 export class Mod extends AbstractMod {
   constructor(opts = {}){
     super(opts);
@@ -41,11 +47,29 @@ export class Mod extends AbstractMod {
     return this.transform ? this.transform(this.opts) : this.opts;
   };
 
-  getOptions(opts = {}){
-    return this.transform ? this.transform({...this.opts, ...opts}) : {...this.opts, ...opts};
+  getOptions(opts){
+    let options;
+    if ( typeof this.opts === 'object' && typeof opts === 'object' ){
+      options = {...this.opts, ...opts};
+    } else if ( Array.isArray(this.opts) && Array.isArray(opts) ){
+      options = [...this.opts, ...opts];
+    } else if ( opts ){
+      options = opts;
+    } else {
+      options = this.opts;
+    }
+
+    return this.transform ? this.transform(options) : options;
   };
+
+  createOptions(opts){
+    return opts;
+  }
 };
 
+/**
+ * 插件基类
+ */
 export class Plugin extends AbstractMod {
   constructor(opts){
     super(opts);
@@ -83,13 +107,19 @@ export class Plugin extends AbstractMod {
     return new Func(this.opts);
   }
 
-  getPlugin(arg1, arg2, arg3, arg4){
+  getPlugin(opts, ...args){
     const Func = this.Plugin;
-    return new Func(
-      this.opts && typeof arg1 === 'object' ? { ...this.opts, ...arg1 } : arg1, 
-      arg2, 
-      arg3, 
-      arg4
-    );
+    let options;
+    if ( typeof this.opts === 'object' && typeof opts === 'object' ){
+      options = {...this.opts, ...opts};
+    } else if ( Array.isArray(this.opts) && Array.isArray(opts) ){
+      options = [...this.opts, ...opts];
+    } else if ( opts ){
+      options = opts;
+    } else {
+      options = this.opts;
+    }
+    
+    return new Func(options, ...args);
   };
 };

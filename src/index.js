@@ -1,18 +1,12 @@
-import { config } from './config';
-import WebpackConfig from './WebpackConfig';
-import { Mod, Plugin } from './Mod';
-import loaders from './loaders';
-import plugins from './plugins';
-import getDefaultConfig from './getDefaultConfig';
-import { installDependency } from './dependency';
+import { config } from './apis/config';
+import WebpackConfig from './apis/WebpackConfig';
+import getWebpackConfig from './apis/getWebpackConfig';
+import { install, installDependencies } from './depend';
 
 export default {
   config,
   WebpackConfig,
-  Mod,
-  Plugin,
-  loaders,
-  plugins,
-  getDefaultConfig,
-  installDependency
+  getWebpackConfig,
+  installDependencies,
+  install
 };

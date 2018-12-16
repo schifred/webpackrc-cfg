@@ -9,9 +9,9 @@ yarn.lock
 .DS_Store
 package-lock.json
 yarn.lock
+.nyc_output
 
 /test/
-node_modules/
 /node_modules/
 /.vscode/
 .DS_Store

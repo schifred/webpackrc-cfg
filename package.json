@@ -1,32 +1,40 @@
 {
   "name": "webpackrc-cfg",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "dn test && dn build -e prod",
-    "build": "rimraf lib && babel src --out-dir lib"
-  },
-  "bin": {
-    "cfg": "bin/cfg.js"
+    "build": "rimraf lib && babel src --out-dir lib",
+    "test": "npm run build && cross-env NODE_ENV=test nyc mocha --no-timeouts test/**/*-test.js"
   },
   "author": "alfred.qiu",
   "license": "MIT",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": true,
+    "instrument": false
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-add-module-exports": "^1.0.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "webpack": "^4.27.1",
+    "cross-env": "^5.0.5",
+    "expect": "^21.2.1",
+    "glob": "^7.1.2",
+    "mocha": "^4.0.0",
+    "nyc": "^11.2.1",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "common-bin": "^2.7.3",
-    "debug": "^4.0.1",
-    "globby": "^8.0.1",
-    "os": "^0.1.1",
-    "shify": "^3.0.6"
-  },
-  "projectDependencies": {
     "@babel/core": "^7.1.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-decorators": "^7.1.2",
@@ -51,6 +59,7 @@
     "@babel/runtime-corejs2": "^7.1.2",
     "autoprefixer": "^9.1.5",
     "awesome-typescript-loader": "^5.2.1",
+    "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-import": "^1.9.1",
@@ -58,24 +67,35 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "clean-webpack-plugin": "^0.1.19",
+    "common-bin": "^2.7.3",
     "copy-webpack-plugin": "^4.5.2",
+    "cross-spawn": "^6.0.5",
     "css-loader": "^1.0.0",
     "csv-loader": "^3.0.2",
+    "debug": "^4.0.1",
     "ejs-loader": "^0.3.1",
-    "eslint-config-react-app": "^2.1.0",
+    "eslint": "^5.10.0",
+    "eslint-config-react-app": "^3.0.5",
     "eslint-loader": "^2.1.1",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fast-sass-loader": "^1.4.6",
     "file-loader": "^2.0.0",
+    "globby": "^8.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.4",
-    "npm-install-webpack-plugin": "^4.0.5",
     "node-sass": "^4.9.3",
+    "npm-install-webpack-plugin": "^4.0.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "os": "^0.1.1",
+    "papaparse": "^4.6.2",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^5.0.2",
@@ -83,6 +103,7 @@
     "svg-sprite-loader": "^4.1.1",
     "ts-loader": "^5.2.1",
     "typescript": "^3.0.3",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^1.1.1",
     "vmodule-webpack-plugin": "^1.0.9",
     "vue-loader": "^15.4.2",
