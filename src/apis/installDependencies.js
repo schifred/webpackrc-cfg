@@ -24,7 +24,7 @@ export function install(name){
   const npm = getConfig('npm');
   if ( !name ){
     console.info(`Installing dependencies ...`);
-    spawn.sync(npm, 'install', { 
+    spawn.sync(npm, ['install'], { 
       stdio: 'inherit' 
     });
     console.info('Done');
