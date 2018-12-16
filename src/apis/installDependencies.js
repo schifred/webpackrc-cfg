@@ -60,7 +60,6 @@ export async function installDependencies(installFlag = false){
 
   await install();
 
-  console.log(installFlag)
   if ( installFlag ){
     for ( let i = 0; i < devDependencies.length; i++ ){
       const [ moduleName ] = dependencies[devDependencies[i]] ? 
