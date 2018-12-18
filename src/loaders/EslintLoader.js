@@ -1,6 +1,15 @@
+import eslintFormatter from 'react-dev-utils/eslintFormatter';
 import { Mod } from '../Mod';
 
 export default class EslintLoader extends Mod { 
+  defaultOptions = {
+    formatter: eslintFormatter,
+    useEslintrc: false,
+    baseConfig: {
+      extends: [ require.resolve('eslint-config-react-app') ],
+    }
+  };
+
   constructor(opts = {}){
     super(opts);
     this.init();

@@ -27,25 +27,26 @@ function assertResult(actualDir, expectDir) {
 function testBuild(cwd, done) {
   const { getWebpackConfig } = require('../../lib/index');
   const options = require(resolve(cwd, 'config.js'));
-  const webpackConfig = getWebpackConfig({ 
+  getWebpackConfig({ 
     ...options, 
     mode: 'production', 
     npm: 'cnpm' 
-  }, { cwd });
-  const compiler = webpack(webpackConfig);
-
-  compiler.run((err, stats) => {
-    if ( err ){
-      console.log('compile failed');
-      return;
-    };
-
-    try {
-      assertResult(join(cwd, 'dist'), join(cwd, 'expected'));
-    } catch (e) {
-      console.log(e);
-    }
-    done();
+  }, { cwd }).then(webpackConfig => {
+    const compiler = webpack(webpackConfig);
+  
+    compiler.run((err, stats) => {
+      if ( err ){
+        console.log('compile failed');
+        return;
+      };
+  
+      try {
+        assertResult(join(cwd, 'dist'), join(cwd, 'expected'));
+      } catch (e) {
+        console.log(e);
+      }
+      done();
+    });
   });
 }
 

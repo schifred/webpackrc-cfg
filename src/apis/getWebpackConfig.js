@@ -6,13 +6,14 @@ import { installDependencies } from './installDependencies';
 import WebpackConfig from './WebpackConfig';
 import { createCtx, getFiles, getDirs } from '../utils';
 
-const { BabelLoader, TsLoader, JsonLoader, RawLoader, UrlLoader, CssLoader, 
+const { EslintLoader, BabelLoader, TsLoader, JsonLoader, RawLoader, UrlLoader, CssLoader, 
   PostcssLoader, LessLoader, FastSassLoader, MiniCssExtractLoader } = WebpackConfig.loaders;
-const { MiniCssExtractPlugin, DefinePlugin, SplitChunksPlugin, HtmlWebpackPlugin, 
-  OccurrenceOrderPlugin, HotModuleReplacementPlugin, CleanWebpackPlugin, 
-  CopyWebpackPlugin, UglifyjsWebpackPlugin, OptimizeCssAssetsWebpackPlugin } = WebpackConfig.plugins;
+const { MiniCssExtractPlugin, DefinePlugin, HtmlWebpackPlugin, OccurrenceOrderPlugin, 
+  HotModuleReplacementPlugin, CleanWebpackPlugin, Webpackbar, CopyWebpackPlugin, 
+  SourceMapDevToolPlugin, UglifyjsWebpackPlugin, OptimizeCssAssetsWebpackPlugin } = WebpackConfig.plugins;
 
 // 创建 loader, plugin 实例
+const eslintLoader = new EslintLoader();
 const babelLoader = new BabelLoader();
 const jsonLoader = new JsonLoader();
 const rawLoader = new RawLoader();
@@ -27,12 +28,13 @@ const miniCssExtractLoader = new MiniCssExtractLoader()
 // 创建 plugin 实例
 const miniCssExtractPlugin = new MiniCssExtractPlugin();
 const definePlugin = new DefinePlugin();
-const splitChunksPlugin = new SplitChunksPlugin();
 const htmlWebpackPlugin = new HtmlWebpackPlugin();
 const occurrenceOrderPlugin = new OccurrenceOrderPlugin();
 const hotModuleReplacementPlugin = new HotModuleReplacementPlugin();
 const cleanWebpackPlugin = new CleanWebpackPlugin();
+const webpackbar = new Webpackbar();
 const copyWebpackPlugin = new CopyWebpackPlugin();
+// const sourceMapDevToolPlugin = new SourceMapDevToolPlugin();
 const uglifyjsWebpackPlugin = new UglifyjsWebpackPlugin();
 const optimizeCssAssetsWebpackPlugin = new OptimizeCssAssetsWebpackPlugin();
 
@@ -43,7 +45,8 @@ const optimizeCssAssetsWebpackPlugin = new OptimizeCssAssetsWebpackPlugin();
  * @param {object} context 上下文
  */
 function applyBasic(webpackConfig, options, context){
-  let { mode, entry, output, publicPath, resolve, alias, devtool, externals, target } = options;
+  let { mode, folders, entry, output, publicPath, resolve, alias, devtool, 
+    externals, target, splitChunks, splitChunksOptions = {} } = options;
   let { cwd, realPaths: { app, src }, paths: { dist } } = context;
 
   if ( entry ){
@@ -65,43 +68,40 @@ function applyBasic(webpackConfig, options, context){
   webpackConfig.entry = entry || getFiles(src);
   webpackConfig.output = output || {
     path: `./${dist}`,
-    filename: '[name].js',
+    filename: folders && folders.js ? `${folders.js}/[name].js` : '[name].js',
     publicPath: mode === 'production' ? publicPath || './' : '/'
   };
   webpackConfig.resolve = resolve ? { alias, ...resolve } : {
     extensions: [ '.web.js', '.js', '.jsx', '.tsx', '.json' ],
     alias
   };
-  webpackConfig.devtool = devtool ? devtool : mode !== 'production' ? 'source-map' : undefined;
+  webpackConfig.devtool = mode !== 'production' ? devtool || 'source-map' : false;
   if ( mode !== 'production' ) webpackConfig.watch = true;
   webpackConfig.optimization = {
-    removeAvailableModules: true,
-    removeEmptyChunks: true,
-    mergeDuplicateChunks: true,
-    minimize: false,
     ...(mode !== 'production' ? {} : {
       minimizer: [
         uglifyjsWebpackPlugin.getPlugin({
           cache: true,
-          parallel: true,
-          sourceMap: devtool ? true : false
+          parallel: true
         }), 
         optimizeCssAssetsWebpackPlugin.getPlugin({})
       ]
     }),
-    splitChunks: {
+    splitChunks: splitChunks ? splitChunks : {
       cacheGroups: {
         styles: {
-          name: 'common',
+          name: folders && folders.style ? `${folders.style}/common` : 'common',
           test: /\.css$/,
           chunks: 'all',
-          minChunks: 2
+          minChunks: 2,
+          ...splitChunksOptions
         },
         js: {
-          name: 'common',
+          name: folders && folders.js ? `${folders.js}/common` : 'common',
           test: /\.js$/,
           chunks: 'all',
-          minChunks: 2
+          minChunks: 2,
+          ...splitChunksOptions
         }
       }
     }
@@ -118,12 +118,17 @@ function applyBasic(webpackConfig, options, context){
  */
 function applyRules(webpackConfig, options, context){
   const { rules = [], module = {} } = options;
-  const { babel = {}, ts = {}, css = {} } = module;
+  const { eslint, babel = {}, ts = {}, css = {} } = module;
 
   webpackConfig.rules = [{
     test: /\.(js|jsx|mjs)$/,
-    loader: babelLoader.module,
-    options: babelLoader.getOptions(babel),
+    loader: [{
+      loader: babelLoader.module,
+      options: babelLoader.getOptions(babel)
+    }, eslint ? {
+      loader: eslintLoader.module,
+      options: eslintLoader.getOptions(typeof eslint === 'object' ? eslint : {})
+    } : undefined].filter(loader => !!loader),
     exclude: [/node_modules/]
   }, {
     test: /\.(ts|tsx)$/,
@@ -133,7 +138,10 @@ function applyRules(webpackConfig, options, context){
     }, {
       loader: tsLoader.module,
       options: tsLoader.getOptions(ts)
-    }]
+    }, eslint ? {
+      loader: eslintLoader.module,
+      options: eslintLoader.getOptions(typeof eslint === 'object' ? eslint : {})
+    } : undefined].filter(loader => !!loader)
   }, {
     test: /\.json$/,
     loader: jsonLoader.module
@@ -194,7 +202,7 @@ function applyRules(webpackConfig, options, context){
  * @param {object} context 上下文
  */
 function applyPlugins(webpackConfig, options, context){
-  const { mode } = options;
+  const { mode, folders } = options;
   const { realPaths: { app, src, dist, assets } } = context;
 
   let htmls = getFiles(src, /\.html$|\.ejs$/);
@@ -203,12 +211,6 @@ function applyPlugins(webpackConfig, options, context){
     definePlugin.getPlugin({
       'process.env.NODE_ENV': mode === 'production' ? '"production"' : '"development"'
     }),
-    mode === 'production' ? splitChunksPlugin.getPlugin({          
-      name: 'common',
-      minChunks: function (module) {// 提供的公共模块需要在 node_modules 目录中
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      }
-    }) : undefined,
     ...Object.keys(htmls).map(fileName => {
       return htmlWebpackPlugin.getPlugin({
         title: fileName,
@@ -219,7 +221,7 @@ function applyPlugins(webpackConfig, options, context){
     occurrenceOrderPlugin.getPlugin(),
     mode !== 'production' ? hotModuleReplacementPlugin.getPlugin() : undefined,
     miniCssExtractPlugin.getPlugin({
-      filename: "[name].css"
+      filename: folders && folders.style ? `${folders.style}/[name].css` :  "[name].css"
     }),
     mode === 'production' ? cleanWebpackPlugin.getPlugin([dist], {
       root: app
@@ -228,6 +230,8 @@ function applyPlugins(webpackConfig, options, context){
       from: assets,
       to: dist
     }]) : undefined,
+    // mode === 'production' && devtool ? sourceMapDevToolPlugin.getPlugin() : undefined,
+    webpackbar.getPlugin()
   ].filter(plugin => !!plugin);
 }
 
@@ -240,7 +244,7 @@ function applyPlugins(webpackConfig, options, context){
 export default async function getWebpackConfig(
   opts = { mode: 'production' }, 
   context, 
-  installFlag = false
+  installMode
 ){
   const { npm, ...options } = opts;
   const { cwd, paths } = context;
@@ -252,7 +256,7 @@ export default async function getWebpackConfig(
   });
 
   // 安装依赖
-  await installDependencies(installFlag);
+  await installDependencies(installMode);
 
   // 生成 webpack 配置
   let webpackConfig = new WebpackConfig();

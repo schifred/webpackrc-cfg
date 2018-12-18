@@ -29,10 +29,15 @@ const webpackConfig = getWebpackConfig({
   target: 'node',// 构建目标
   rules: [{ test: /\.vue$/, loader: 'vue-loader' }],// 额外的加载器
   module: {
+    eslint: {},// 开启 eslint 校验
     babel: { plugins, presets },// 定义额外 babel 的配置
     ts: {  },// 定义额外 ts 的配置
     css: { modules: false },// 定义额外 css 的配置
-  }
+  },
+  splitChunksOptions: {// 公共模块抽取，自动提取到 commons 文件内
+    minSize: 1000
+  },
+  splitChunks: {}// 自定义公共模块抽取规则
 }, {
   cwd: 'workspace',// 工作目录，默认 process.cwd()
   paths: {
@@ -41,5 +46,5 @@ const webpackConfig = getWebpackConfig({
     assets: 'assets',// 静态资源，默认 'assets' 目录
     nodeModules: 'node_modules'// 依赖目录，默认 'node_modules' 目录
   }
-});
+}, installMode);// installMode = 'dependencis' 安装依赖和 webpackrc-cfg；installMode = 'devDependencis' 安装依赖和使用的构建工具；installMode 否值，不安装依赖
 ```

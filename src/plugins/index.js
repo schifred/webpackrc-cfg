@@ -4,7 +4,7 @@ import DefinePlugin from './DefinePlugin';
 import DllPlugin from './DllPlugin';
 import DLLReferencePlugin from './DLLReferencePlugin';
 import EnvironmentPlugin from './EnvironmentPlugin';
-import ExtractTextWebpackPlugin from './ExtractTextWebpackPlugin';
+import FriendlyErrorsWebpackPlugin from './FriendlyErrorsWebpackPlugin';
 import HotModuleReplacementPlugin from './HotModuleReplacementPlugin';
 import HtmlWebpackPlugin from './HtmlWebpackPlugin';
 import MiniCssExtractPlugin from './MiniCssExtractPlugin';
@@ -14,10 +14,11 @@ import NpmInstallWebpackPlugin from './NpmInstallWebpackPlugin';
 import OccurrenceOrderPlugin from './OccurrenceOrderPlugin';
 import OptimizeCssAssetsWebpackPlugin from './OptimizeCssAssetsWebpackPlugin';
 import ProvidePlugin from './ProvidePlugin';
-import SplitChunksPlugin from './SplitChunksPlugin';
+import SourceMapDevToolPlugin from './SourceMapDevToolPlugin';
 import UglifyjsWebpackPlugin from './UglifyjsWebpackPlugin';
 import VmoduleWebpackPlugin from './VmoduleWebpackPlugin';
 import WatchMissingNodeModulesPlugin from './WatchMissingNodeModulesPlugin';
+import Webpackbar from './Webpackbar';
 import WebpackVisualizerPlugin from './WebpackVisualizerPlugin';
 
 export default {
@@ -27,7 +28,7 @@ export default {
   DllPlugin,
   DLLReferencePlugin,
   EnvironmentPlugin, 
-  ExtractTextWebpackPlugin,
+  FriendlyErrorsWebpackPlugin, 
   HotModuleReplacementPlugin,
   HtmlWebpackPlugin, 
   ModuleConcatenationPlugin, 
@@ -37,10 +38,11 @@ export default {
   OccurrenceOrderPlugin, 
   OccurrenceOrderPlugin,
   OptimizeCssAssetsWebpackPlugin,
-  ProvidePlugin,
-  SplitChunksPlugin,
+  ProvidePlugin, 
+  SourceMapDevToolPlugin, 
   UglifyjsWebpackPlugin,
   VmoduleWebpackPlugin,
   WatchMissingNodeModulesPlugin,
-  WebpackVisualizerPlugin,
+  Webpackbar, 
+  WebpackVisualizerPlugin
 };

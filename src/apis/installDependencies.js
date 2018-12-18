@@ -51,22 +51,22 @@ export function install(name){
 /**
  * 安装依赖
  */
-export async function installDependencies(installFlag = false){
+export async function installDependencies(installMode = 'dependencies'){
   // ctrl + c 退出
   process.on('SIGINT', function () {
     console.log('exit!');
     process.exit();
   });
 
-  await install();
+  if ( !!installMode ) await install();
 
-  if ( installFlag ){
+  if ( installMode === 'devDependencies' ){
     for ( let i = 0; i < devDependencies.length; i++ ){
       const [ moduleName ] = dependencies[devDependencies[i]] ? 
         [devDependencies[i]] : devDependencies[i].split(/\.|\//);
       await install(moduleName);
     };
-  } else {
-    await install(pluginName);
+  } else if ( installMode === 'dependencies' ){
+    await install(`${pluginName}`);
   };
 };
