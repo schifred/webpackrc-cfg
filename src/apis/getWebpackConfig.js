@@ -36,6 +36,7 @@ const copyWebpackPlugin = new CopyWebpackPlugin();
 // const sourceMapDevToolPlugin = new SourceMapDevToolPlugin();
 const uglifyjsWebpackPlugin = new UglifyjsWebpackPlugin();
 const optimizeCssAssetsWebpackPlugin = new OptimizeCssAssetsWebpackPlugin();
+const friendlyErrorsWebpackPlugin = new WebpackConfig.plugins.FriendlyErrorsWebpackPlugin();
 
 /**
  * 基础配置
@@ -227,7 +228,8 @@ function applyPlugins(webpackConfig, options, context){
       to: dist
     }]) : undefined,
     // mode === 'production' && devtool ? sourceMapDevToolPlugin.getPlugin() : undefined,
-    webpackbar.getPlugin()
+    webpackbar.getPlugin(),
+    friendlyErrorsWebpackPlugin.getPlugin()
   ].filter(plugin => !!plugin);
 }
 
