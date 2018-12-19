@@ -20,7 +20,7 @@ function getDependencyNameWithVersion(name){
  * 安装依赖
  * @param {string} name 依赖
  */
-export async function install(name){
+export function install(name){
   const npm = getConfig('npm');
   if ( !name ){
     console.info(`Installing dependencies ...`);
@@ -41,9 +41,8 @@ export async function install(name){
     if ( save ) args.push('--save-dev');
 
     console.info(`Installing ${name} ...`);
-    const output = await spawn(npm, args, { 
-      stdio: 'inherit', 
-      cwd
+    const output = spawn.sync(npm, args, { 
+      stdio: ["ignore", "pipe", "inherit"]
     });
     console.info('Done');
 

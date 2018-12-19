@@ -60,12 +60,6 @@ class Babel_Plugin_Transform_Runtime extends Mod {
 class Babel_Plugin_Add_Module_Exports extends Mod { };
 // flow 的类型注释转换
 class Babel_Plugin_Typecheck extends Mod { };
-// 装饰器语法转换
-class Babel_Plugin_Transform_Decorators_Legacy extends Mod { };
-// 移除 strict mode
-class Babel_Plugin_Transform_Remove_Strict_Mode extends Mod { };
-// JSX 语法自动加载 react
-class Babel_Plugin_React_Require extends Mod { };
 // 加载样式等模块
 class Babel_Plugin_Import extends Mod { };
 
@@ -261,9 +255,6 @@ export default class BabelLoader extends Mod {
   static Babel_Plugin_Transform_Runtime = Babel_Plugin_Transform_Runtime;
   static Babel_Plugin_Add_Module_Exports = Babel_Plugin_Add_Module_Exports;
   static Babel_Plugin_Typecheck = Babel_Plugin_Typecheck;
-  static Babel_Plugin_Transform_Decorators_Legacy = Babel_Plugin_Transform_Decorators_Legacy;
-  static Babel_Plugin_Transform_Remove_Strict_Mode = Babel_Plugin_Transform_Remove_Strict_Mode;
-  static Babel_Plugin_React_Require = Babel_Plugin_React_Require;
   static Babel_Plugin_Import = Babel_Plugin_Import;
   static Babel_Plugin_Prorosal_Function_Bind = Babel_Plugin_Prorosal_Function_Bind;
   static Babel_Plugin_Proposal_Export_Default_From = Babel_Plugin_Proposal_Export_Default_From;
@@ -295,7 +286,6 @@ export default class BabelLoader extends Mod {
     ],
     plugins: [ 
       new BabelLoader.Babel_Plugin_Transform_Runtime(),
-      // new BabelLoader.Babel_Plugin_Transform_Decorators_Legacy(),
       new BabelLoader.Babel_Plugin_Add_Module_Exports(),
       // https://babeljs.io/blog/2018/07/27/removing-babels-stage-presets
       ...new Babel_Plugins_Stage_0().plugin,
