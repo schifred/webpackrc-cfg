@@ -6,16 +6,15 @@ import { installDependencies } from './installDependencies';
 import WebpackConfig from './WebpackConfig';
 import { createCtx, getFiles, getDirs } from '../utils';
 
-const { EslintLoader, BabelLoader, TsLoader, JsonLoader, RawLoader, UrlLoader, CssLoader, 
+const { EslintLoader, BabelLoader, TsLoader, RawLoader, UrlLoader, CssLoader, 
   PostcssLoader, LessLoader, FastSassLoader, MiniCssExtractLoader } = WebpackConfig.loaders;
 const { MiniCssExtractPlugin, DefinePlugin, HtmlWebpackPlugin, OccurrenceOrderPlugin, 
   HotModuleReplacementPlugin, CleanWebpackPlugin, Webpackbar, CopyWebpackPlugin, 
-  SourceMapDevToolPlugin, UglifyjsWebpackPlugin, OptimizeCssAssetsWebpackPlugin } = WebpackConfig.plugins;
+  UglifyjsWebpackPlugin, OptimizeCssAssetsWebpackPlugin } = WebpackConfig.plugins;
 
 // 创建 loader, plugin 实例
 const eslintLoader = new EslintLoader();
 const babelLoader = new BabelLoader();
-const jsonLoader = new JsonLoader();
 const rawLoader = new RawLoader();
 const urlLoader = new UrlLoader();
 const cssLoader = new CssLoader();
@@ -142,9 +141,6 @@ function applyRules(webpackConfig, options, context){
       loader: eslintLoader.module,
       options: eslintLoader.getOptions(typeof eslint === 'object' ? eslint : {})
     } : undefined].filter(loader => !!loader)
-  }, {
-    test: /\.json$/,
-    loader: jsonLoader.module
   }, {
     test: /\.html$/,
     loader: rawLoader.module
