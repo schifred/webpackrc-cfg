@@ -22,32 +22,27 @@ function getDependencyNameWithVersion(name){
  */
 export function install(name){
   const npm = getConfig('npm');
-  if ( !name ){
-    console.info(`Installing dependencies ...`);
-    spawn.sync(npm, ['install'], { 
-      stdio: 'inherit' 
-    });
-    console.info('Done');
-    return;
-  };
-
   const cwd = getConfig('cwd');
-  const modulePath = path.resolve(cwd, `./node_modules/${name}`);
+  const modulePath = name && path.resolve(cwd, `./node_modules/${name}`);
+  if ( name && fs.existsSync(modulePath) ) return;
 
-  if ( !fs.existsSync(modulePath) ){
-    const save = getConfig('save');
-    const nameWithVersion = getDependencyNameWithVersion(name);
-    let args = [npm === 'yarn' ? 'add' : 'install', nameWithVersion];
-    if ( save ) args.push('--save-dev');
+  const save = getConfig('save');
+  const nameWithVersion = name && getDependencyNameWithVersion(name);
+  let args = name ? [npm === 'yarn' ? 'add' : 'install', nameWithVersion] : 
+    [npm === 'yarn' ? 'add' : 'install'];
+  if ( name && save ) args.push('--save-dev');
 
-    console.info(`Installing ${name} ...`);
-    const output = spawn.sync(npm, args, { 
-      stdio: ["ignore", "pipe", "inherit"]
-    });
-    console.info('Done');
+  console.info(name ? `Installing ${name} ...` : 'Installing dependencies ...');
+  const output = spawn.sync(npm, args, { 
+    stdio: ["ignore", "pipe", "inherit"]
+  });
 
-    return output;
+  if ( output.error ){
+    if ( name ) console.info('npm install webpackrc-cfg is recommended');
+    throw output.error;
   };
+
+  console.info('Done');
 }
 
 /**

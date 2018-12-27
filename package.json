@@ -1,6 +1,6 @@
 {
   "name": "webpackrc-cfg",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -68,7 +68,6 @@
     "css-loader": "^1.0.0",
     "csv-loader": "^3.0.2",
     "debug": "^4.0.1",
-    "ejs-loader": "^0.3.1",
     "eslint": "^5.10.0",
     "eslint-config-react-app": "^3.0.5",
     "eslint-loader": "^2.1.1",

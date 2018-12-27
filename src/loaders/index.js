@@ -1,7 +1,6 @@
 import BabelLoader from './BabelLoader';
 import CssLoader from './CssLoader';
 import CsvLoader from './CsvLoader';
-import EjsLoader from './EjsLoader';
 import EslintLoader from './EslintLoader';
 import FastSassLoader from './FastSassLoader';
 import FileLoader from './FileLoader';
@@ -22,7 +21,6 @@ export default {
   BabelLoader, 
   CssLoader, 
   CsvLoader, 
-  EjsLoader,
   EslintLoader,
   FastSassLoader,
   FileLoader, 

@@ -28,9 +28,10 @@ function testBuild(cwd, done) {
   const { getWebpackConfig } = require('../../lib/index');
   const options = require(resolve(cwd, 'config.js'));
   getWebpackConfig({ 
-    ...options, 
     mode: 'production', 
-    npm: 'cnpm' 
+    npm: 'cnpm', 
+    installMode: 'dependencies',
+    ...options
   }, { cwd }).then(webpackConfig => {
     const compiler = webpack(webpackConfig);
   

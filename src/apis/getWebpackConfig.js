@@ -208,11 +208,13 @@ function applyPlugins(webpackConfig, options, context){
     definePlugin.getPlugin({
       'process.env.NODE_ENV': mode === 'production' ? '"production"' : '"development"'
     }),
+    // html-webpack-plugin 支持使用 ejs 模板
     ...Object.keys(htmls).map(fileName => {
       return htmlWebpackPlugin.getPlugin({
-        title: fileName,
-        showErrors: true,
-        template: htmls[fileName]
+        filename: folders && folders.html ? 
+          `${folders.html}/${fileName}.html` : `${fileName}.html`,
+        template: htmls[fileName],
+        chunks: [ fileName ]
       })
     }),
     occurrenceOrderPlugin.getPlugin(),
