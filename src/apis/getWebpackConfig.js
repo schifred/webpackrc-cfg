@@ -117,8 +117,8 @@ function applyBasic(webpackConfig, options, context){
  * @param {object} context 上下文
  */
 function applyRules(webpackConfig, options, context){
-  const { rules = [], module = {} } = options;
-  const { eslint, babel = {}, ts = {}, css = {} } = module;
+  const { folders, rules = [], module = {} } = options;
+  const { eslint, babel = {}, ts = {}, css = {}, img = {}, font = {} } = module;
 
   webpackConfig.rules = [{
     test: /\.(js|jsx|mjs)$/,
@@ -148,11 +148,17 @@ function applyRules(webpackConfig, options, context){
   }, {
     test: /\.(png|jpg|gif)\?*.*$/,
     loader: urlLoader.module,
-    options: urlLoader.options
+    options: urlLoader.getOptions({
+      name: folders && folders.img ? `${folders.img}/[hash].[ext]` : '[hash].[ext]',
+      ...img
+    })
   }, {
     test: /\.(eot|woff|woff2|webfont|ttf|svg)\?*.*$/,
     loader: urlLoader.module,
-    options: urlLoader.options
+    options: urlLoader.getOptions({
+      name: folders && folders.font ? `${folders.font}/[hash].[ext]` : '[hash].[ext]',
+      ...font
+    })
   },{
     test: /\.less$/,
     loader: [miniCssExtractLoader.module, {
@@ -214,7 +220,8 @@ function applyPlugins(webpackConfig, options, context){
         filename: folders && folders.html ? 
           `${folders.html}/${fileName}.html` : `${fileName}.html`,
         template: htmls[fileName],
-        chunks: [ fileName ]
+        chunks: [ fileName ],
+        showErrors: true
       })
     }),
     occurrenceOrderPlugin.getPlugin(),
