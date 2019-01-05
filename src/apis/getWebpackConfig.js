@@ -1,6 +1,6 @@
 // 参考 https://github.com/crlang/easy-webpack-4/blob/master/webpack.config.js
 import path from 'path';
-import { existsSync } from 'fs';
+import { existsSync, writeFileSync } from 'fs';
 import { config } from './config';
 import { installDependencies } from './installDependencies';
 import WebpackConfig from './WebpackConfig';
@@ -45,7 +45,7 @@ const friendlyErrorsWebpackPlugin = new WebpackConfig.plugins.FriendlyErrorsWebp
  * @param {object} context 上下文
  */
 function applyBasic(webpackConfig, options, context){
-  let { mode, folders, entry, output, publicPath, resolve, alias, devtool, 
+  let { mode, folders, entry, output, publicPath, resolve = {}, alias, devtool, 
     externals, target, splitChunks, splitChunksOptions = {} } = options;
   let { cwd, realPaths: { app, src }, paths: { dist } } = context;
 
@@ -71,8 +71,9 @@ function applyBasic(webpackConfig, options, context){
     filename: folders && folders.js ? `${folders.js}/[name].js` : '[name].js',
     publicPath: mode === 'production' ? publicPath || './' : '/'
   };
-  webpackConfig.resolve = resolve ? { alias, ...resolve } : {
+  webpackConfig.resolve = {
     extensions: [ '.web.js', '.js', '.jsx', '.tsx', '.json' ],
+    ...resolve,
     alias
   };
   webpackConfig.devtool = mode !== 'production' ? devtool || 'source-map' : false;
@@ -205,10 +206,10 @@ function applyRules(webpackConfig, options, context){
  * @param {object} context 上下文
  */
 function applyPlugins(webpackConfig, options, context){
-  const { mode, folders } = options;
+  const { mode, folders, template } = options;
   const { realPaths: { app, src, dist, assets } } = context;
 
-  let htmls = getFiles(src, /\.html$|\.ejs$/);
+  let htmls = getFiles(template ? path.resolve(src, template) : src, /\.html$|\.ejs$/);
 
   webpackConfig.plugins = [
     definePlugin.getPlugin({
@@ -253,8 +254,8 @@ export default async function getWebpackConfig(
   context, 
   installMode
 ){
-  const { npm, ...options } = opts;
-  const { cwd, paths } = context;
+  const { ...options } = opts;
+  const { npm, cwd, paths } = context;
   const ctx = createCtx(paths, cwd);
 
   config({
