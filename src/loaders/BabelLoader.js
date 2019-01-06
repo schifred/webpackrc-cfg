@@ -314,11 +314,11 @@ export default class BabelLoader extends Mod {
       };
 
       if ( !preset.options ){
-        _presets.push(preset.mod);
+        _presets.push(preset.module);
         return;
       };
 
-      if ( preset.mod && preset.options ) _presets.push([preset.mod, preset.options]);
+      if ( preset.mod && preset.options ) _presets.push([preset.module, preset.options]);
     });
 
     plugins.map(plugin => {
@@ -328,11 +328,11 @@ export default class BabelLoader extends Mod {
       };
 
       if ( !plugin.options ){
-        _plugins.push(plugin.mod);
+        _plugins.push(plugin.module);
         return;
       };
 
-      if ( plugin.mod && plugin.options ) _plugins.push([plugin.mod, plugin.options]);
+      if ( plugin.mod && plugin.options ) _plugins.push([plugin.module, plugin.options]);
     });
 
     return {

@@ -63,6 +63,7 @@ function applyBasic(webpackConfig, options, context){
   };
   alias = {
     "@babel/runtime-corejs2": path.resolve(__dirname, '../../node_modules/@babel/runtime-corejs2'),
+    "@babel/plugin-transform-runtime": path.resolve(__dirname, '../../node_modules/@babel/plugin-transform-runtime'),
     ...alias
   };
 
