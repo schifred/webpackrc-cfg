@@ -1,5 +1,5 @@
 module.exports = {
   "resolve": {
-    "extensions": ['.tiny.js']
+    "extensions": ['.js', '.tiny.js']
   }
 }

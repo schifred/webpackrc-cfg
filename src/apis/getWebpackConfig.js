@@ -2,7 +2,7 @@
 import path from 'path';
 import { existsSync, writeFileSync } from 'fs';
 import { config } from './config';
-import { installDependencies } from './installDependencies';
+// import { installDependencies } from './installDependencies';
 import WebpackConfig from './WebpackConfig';
 import { createCtx, getFiles, getDirs } from '../utils';
 
@@ -33,7 +33,6 @@ const hotModuleReplacementPlugin = new HotModuleReplacementPlugin();
 const cleanWebpackPlugin = new CleanWebpackPlugin();
 const webpackbar = new Webpackbar();
 const copyWebpackPlugin = new CopyWebpackPlugin();
-// const sourceMapDevToolPlugin = new SourceMapDevToolPlugin();
 const uglifyjsWebpackPlugin = new UglifyjsWebpackPlugin();
 const optimizeCssAssetsWebpackPlugin = new OptimizeCssAssetsWebpackPlugin();
 const friendlyErrorsWebpackPlugin = new WebpackConfig.plugins.FriendlyErrorsWebpackPlugin();
@@ -46,7 +45,7 @@ const friendlyErrorsWebpackPlugin = new WebpackConfig.plugins.FriendlyErrorsWebp
  */
 function applyBasic(webpackConfig, options, context){
   let { mode, folders, entry, output, publicPath, resolve = {}, alias, devtool, 
-    externals, target, splitChunks, splitChunksOptions = {} } = options;
+    externals, target, compress = true, common = 'common', splitChunksOptions = {} } = options;
   let { cwd, realPaths: { app, src }, paths: { dist } } = context;
 
   if ( entry ){
@@ -61,6 +60,10 @@ function applyBasic(webpackConfig, options, context){
     });
   } else {
     alias = getDirs(src);
+  };
+  alias = {
+    "@babel/runtime-corejs2": path.resolve(__dirname, '../../node_modules/@babel/runtime-corejs2'),
+    ...alias
   };
 
   webpackConfig.mode = mode || 'development';
@@ -79,7 +82,7 @@ function applyBasic(webpackConfig, options, context){
   webpackConfig.devtool = mode !== 'production' ? devtool || 'source-map' : false;
   if ( mode !== 'production' ) webpackConfig.watch = true;
   webpackConfig.optimization = {
-    ...(mode !== 'production' ? {} : {
+    ...(mode !== 'production' || !compress ? {} : {
       minimizer: [
         uglifyjsWebpackPlugin.getPlugin({
           cache: true,
@@ -88,17 +91,18 @@ function applyBasic(webpackConfig, options, context){
         optimizeCssAssetsWebpackPlugin.getPlugin({})
       ]
     }),
-    splitChunks: splitChunks ? splitChunks : {
+    minimize: mode === 'production' && compress ? true : false,
+    splitChunks: {
       cacheGroups: {
         styles: {
-          name: folders && folders.style ? `${folders.style}/common` : 'common',
-          test: /\.css$/,
+          name: folders && folders.style ? `${folders.style}/${common}` : common,
+          test: /\.(css|less|scss|sass)$/,
           chunks: 'all',
           minChunks: 2,
           ...splitChunksOptions
         },
         js: {
-          name: folders && folders.js ? `${folders.js}/common` : 'common',
+          name: folders && folders.js ? `${folders.js}/${common}` : common,
           test: /\.js$/,
           chunks: 'all',
           minChunks: 2,
@@ -206,7 +210,7 @@ function applyRules(webpackConfig, options, context){
  * @param {object} context 上下文
  */
 function applyPlugins(webpackConfig, options, context){
-  const { mode, folders, template } = options;
+  const { mode, folders, template, common = 'common' } = options;
   const { realPaths: { app, src, dist, assets } } = context;
 
   let htmls = getFiles(template ? path.resolve(src, template) : src, /\.html$|\.ejs$/);
@@ -221,7 +225,7 @@ function applyPlugins(webpackConfig, options, context){
         filename: folders && folders.html ? 
           `${folders.html}/${fileName}.html` : `${fileName}.html`,
         template: htmls[fileName],
-        chunks: [ fileName ],
+        chunks: [ fileName, common ],
         showErrors: true
       })
     }),
@@ -252,7 +256,7 @@ function applyPlugins(webpackConfig, options, context){
 export default async function getWebpackConfig(
   opts = { mode: 'production' }, 
   context, 
-  installMode
+  // installMode
 ){
   const { ...options } = opts;
   const { npm, cwd, paths } = context;
@@ -264,7 +268,7 @@ export default async function getWebpackConfig(
   });
 
   // 安装依赖
-  await installDependencies(installMode);
+  // await installDependencies(installMode);
 
   // 生成 webpack 配置
   let webpackConfig = new WebpackConfig();

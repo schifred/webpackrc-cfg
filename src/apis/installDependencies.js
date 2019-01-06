@@ -55,6 +55,7 @@ export async function installDependencies(installMode = 'dependencies'){
     process.exit();
   });
 
+  // await install('@babel/runtime-corejs2');
   if ( !!installMode ) await install();
 
   if ( installMode === 'devDependencies' ){

@@ -17,7 +17,7 @@
 | rules | 额外的加载器 | undefined |
 | module | 内置加载器选项配置 | undefined |
 | splitChunksOptions | 公共模块抽取，自动提取到 commons 文件内 | undefined |
-| splitChunks | 自定义公共模块抽取规则 | undefined |
+| compress | 是否压缩 | true |
 
 ## 上下文
 
@@ -54,7 +54,7 @@ const webpackConfig = getWebpackConfig({
   splitChunksOptions: {// 公共模块抽取，自动提取到 commons 文件内
     minSize: 1000
   },
-  splitChunks: {}// 自定义公共模块抽取规则
+  compress: false// 是否压缩
 }, {
   npm: 'cnpm',// 依赖安装命令
   cwd: 'workspace',// 工作目录，默认 process.cwd()
@@ -64,5 +64,5 @@ const webpackConfig = getWebpackConfig({
     assets: 'assets',// 静态资源，默认 'assets' 目录
     nodeModules: 'node_modules'// 依赖目录，默认 'node_modules' 目录
   }
-}, installMode);// installMode = 'dependencis' 安装依赖和 webpackrc-cfg；installMode = 'devDependencis' 安装依赖和使用的构建工具；installMode 否值，不安装依赖
+});
 ```

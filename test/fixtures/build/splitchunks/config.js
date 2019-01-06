@@ -1,5 +1,5 @@
 module.exports = {
   "splitChunksOptions": {
-    "minSize": 1000
+    "minSize": 1
   }
 }

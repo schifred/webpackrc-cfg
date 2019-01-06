@@ -161,9 +161,6 @@ export default class WebpackConfig {
     return this.options.optimization;
   };
   set optimization(optimization){
-    if ( this.options.mode === 'production' ){
-      optimization.minimize = true;
-    };
     this.options.optimization = optimization;
   };
 };

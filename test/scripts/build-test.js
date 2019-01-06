@@ -29,10 +29,8 @@ function testBuild(cwd, done) {
   const options = require(resolve(cwd, 'config.js'));
   getWebpackConfig({ 
     mode: 'production', 
-    npm: 'cnpm', 
-    installMode: 'dependencies',
     ...options
-  }, { cwd }).then(webpackConfig => {
+  }, { cwd, npm: 'cnpm' }, false).then(webpackConfig => {
     const compiler = webpack(webpackConfig);
   
     compiler.run((err, stats) => {
@@ -41,11 +39,12 @@ function testBuild(cwd, done) {
         return;
       };
   
-      try {
-        assertResult(join(cwd, 'dist'), join(cwd, 'expected'));
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   assertResult(join(cwd, 'dist'), join(cwd, 'expected'));
+      // } catch (e) {
+      //   console.log(e);
+      // }
+      assertResult(join(cwd, 'dist'), join(cwd, 'expected'));
       done();
     });
   });
