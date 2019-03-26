@@ -12,6 +12,7 @@ class Babel_Preset_Env extends Mod {
     forceAllTransforms: true,
     loose: true,
     useBuiltIns: 'usage',
+    corejs: '2',
     modules: 'commonjs'// https://stackoverflow.com/questions/43042889/typescript-referenceerror-exports-is-not-defined
   };
 
