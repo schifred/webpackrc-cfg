@@ -1,6 +1,6 @@
 // 参考 https://github.com/crlang/easy-webpack-4/blob/master/webpack.config.js
 import path from 'path';
-import { existsSync, writeFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { config } from './config';
 // import { installDependencies } from './installDependencies';
 import WebpackConfig from './WebpackConfig';
@@ -44,7 +44,7 @@ const friendlyErrorsWebpackPlugin = new WebpackConfig.plugins.FriendlyErrorsWebp
  * @param {object} context 上下文
  */
 function applyBasic(webpackConfig, options, context){
-  let { mode, folders, entry, output, publicPath, resolve = {}, alias, devtool, 
+  let { mode, folders, entry = {}, output, publicPath, resolve = {}, alias, devtool, 
     externals, target, compress = true, common = 'common', splitChunksOptions = {} } = options;
   let { cwd, realPaths: { app, src }, paths: { dist } } = context;
 
@@ -52,24 +52,29 @@ function applyBasic(webpackConfig, options, context){
     Object.keys(entry).map(key => {
       entry[key] = path.resolve(app, entry[key]);
     });
-  }
+  };
+  if ( mode !== 'production' ){
+    entry.webpackHotDevClient = require.resolve('react-dev-utils/webpackHotDevClient');
+  };
 
   if ( alias ){
     Object.keys(alias).map(key => {
       alias[key] = path.resolve(app, alias[key]);
     });
   } else {
-    alias = getDirs(src);
+    alias = {};
   };
+
   alias = {
     "@babel/runtime-corejs2": path.resolve(__dirname, '../../node_modules/@babel/runtime-corejs2'),
     "@babel/plugin-transform-runtime": path.resolve(__dirname, '../../node_modules/@babel/plugin-transform-runtime'),
+    ...getDirs(src),
     ...alias
   };
 
   webpackConfig.mode = mode || 'development';
   webpackConfig.context = cwd;
-  webpackConfig.entry = entry || getFiles(src);
+  webpackConfig.entry = {...getFiles(src), ...entry};
   webpackConfig.output = output || {
     path: `./${dist}`,
     filename: folders && folders.js ? `${folders.js}/[name].js` : '[name].js',
