@@ -7,7 +7,7 @@ import WebpackConfig from './WebpackConfig';
 import { createCtx, getFiles, getDirs } from '../utils';
 
 const { EslintLoader, BabelLoader, TsLoader, RawLoader, UrlLoader, CssLoader, 
-  PostcssLoader, LessLoader, FastSassLoader, MiniCssExtractLoader } = WebpackConfig.loaders;
+  PostcssLoader, LessLoader/*, FastSassLoader*/, MiniCssExtractLoader } = WebpackConfig.loaders;
 const { MiniCssExtractPlugin, DefinePlugin, HtmlWebpackPlugin, OccurrenceOrderPlugin, 
   HotModuleReplacementPlugin, CleanWebpackPlugin, Webpackbar, CopyWebpackPlugin, 
   UglifyjsWebpackPlugin, OptimizeCssAssetsWebpackPlugin } = WebpackConfig.plugins;
@@ -20,7 +20,7 @@ const urlLoader = new UrlLoader();
 const cssLoader = new CssLoader();
 const postcssLoader = new PostcssLoader();
 const lessLoader = new LessLoader();
-const fastSassLoader = new FastSassLoader();
+// const fastSassLoader = new FastSassLoader();
 const tsLoader = new TsLoader();
 const miniCssExtractLoader = new MiniCssExtractLoader()
 
@@ -65,9 +65,23 @@ function applyBasic(webpackConfig, options, context){
     alias = {};
   };
 
+  let runtimeCorejs2Path = path.resolve(__dirname, 
+    '../../node_modules/@babel/runtime-corejs2');
+  if ( !existsSync(runtimeCorejs2Path) ){
+    runtimeCorejs2Path = path.resolve(__dirname, 
+      '../../../@babel/runtime-corejs2');
+  };
+
+  let pluginTransformRuntimePath = path.resolve(__dirname, 
+    '../../node_modules/@babel/plugin-transform-runtime');
+  if ( !existsSync(pluginTransformRuntimePath) ){
+    pluginTransformRuntimePath = path.resolve(__dirname, 
+      '../../../@babel/plugin-transform-runtime');
+  };
+
   alias = {
-    "@babel/runtime-corejs2": path.resolve(__dirname, '../../node_modules/@babel/runtime-corejs2'),
-    "@babel/plugin-transform-runtime": path.resolve(__dirname, '../../node_modules/@babel/plugin-transform-runtime'),
+    "@babel/runtime-corejs2": runtimeCorejs2Path,
+    "@babel/plugin-transform-runtime": pluginTransformRuntimePath,
     ...getDirs(src),
     ...alias
   };
@@ -182,7 +196,7 @@ function applyRules(webpackConfig, options, context){
       loader: postcssLoader.module, 
       options: postcssLoader.options 
     }, lessLoader.module]
-  }, {
+  }/*, {
     test: /\.(scss|sass)$/,
     loader: [miniCssExtractLoader.module, {
       loader: cssLoader.module, 
@@ -194,7 +208,7 @@ function applyRules(webpackConfig, options, context){
       loader: postcssLoader.module, 
       options: postcssLoader.options 
     }, fastSassLoader.module]
-  }, {
+  }*/, {
     test: /\.css$/,
     loader: [miniCssExtractLoader.module, { 
       loader: cssLoader.module, 
